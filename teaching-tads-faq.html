@@ -44,6 +44,41 @@
       });
     });
 
+    // overwrite of the default contains selector
+    // https://css-tricks.com/snippets/jquery/make-jquery-contains-case-insensitive/
+    $.expr[":"].contains = $.expr.createPseudo(function(arg) {
+        return function( elem ) {
+            return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+        };
+    });
+
+    $("#busca").keyup(function(){
+
+      // oculta o indice de assuntos
+      $("#assuntos").hide();
+
+      // oculta todos os elementos
+      $("dl:contains('.')").each(function(){
+        var elem = $(this);
+        elem.css("border","solid 3px red");
+        elem.hide();
+      });
+
+      // procura aqueles que contém a string de busca
+      var procura = $(this).val();
+      $("dl:contains("+procura+")").each(function(){
+
+        var elem = $(this);
+        elem.show();
+
+        // destaca o texto buscado
+      //  var conteudo = elem.text();
+      //  var novo = conteudo.replaceAll("/"+procura+"/gi", function(x){return "<h3>"+procura+"</h3>";});
+      //  elem.html(novo);
+
+      });
+    });
+
   });
   </script>
 </head>
@@ -81,6 +116,8 @@
             | <a href=# class=news id="05/2017">05</a> <br />
             <a href=# class=todas>Visualizar todas</a>
             <br />
+            <hr />
+            Busca por conteúdo: <input type=text id=busca />
             <hr />
             <div id=assuntos>
               Assuntos:
