@@ -82,7 +82,7 @@ dl.com-bordas {
 		border-right: 1px solid #131210;
 		border-bottom: 1px solid #131210;
 		}
-		
+
 .source-code {
   background-color:#EEEEEE;
   font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New;
@@ -93,4 +93,26 @@ table, td {
   margin: auto;
   border-collapse: collapse; /* borda fina */
   text-align: center;
+}
+
+.destaca {
+  background-color: lightgreen;
+  font-weight: bold;
+  border: 1px solid blue;
+}
+
+.center {
+  text-align: center;
+}
+
+
+.original {
+  display: none;
+  /*background-color: blue; */
+}
+
+#aviso {
+  display: block;
+  font-size: 14px;
+  padding: 4px;
 }
