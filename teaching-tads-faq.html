@@ -10,6 +10,23 @@
   <script>
   $(document).ready(function(){
 
+    $("#busca").focus();
+
+
+    // duplica todos os DD's para ter o conteudo original antes da busca
+    $("dd").each(function(){
+      var elem = $(this);
+      //elem.hide();
+      var original = elem.html();
+      var texto = elem.html();
+      // adiciona o conteudo anterior numa span escondida
+      var novo = original + "<div class=original>"+texto+"</div>";
+      elem.html(novo);
+      //elem.show();
+    });
+
+
+
     // VISUALIZAR SOMENTE NOTICIAS DO MES/ANO
     $(".news").click(function(){
 
@@ -36,10 +53,10 @@
     // VISUALIZAR TODAS AS NOTÍCIAS
     $(".todas").click(function(){
 
-      // oculta o indice de assuntos
+      // mostra o indice de assuntos
       $("#assuntos").show();
 
-      // oculta todos os elementos
+      // mostra todos os elementos
       $("dt:contains('.')").each(function(){
         var elem = $(this).parent();
         elem.css("border","0");
@@ -55,7 +72,12 @@
         };
     });
 
+
     $("#busca").keyup(function(){
+
+      var procura = $(this).val();
+
+      if (procura.length >= 3) {
 
       // oculta o indice de assuntos
       $("#assuntos").hide();
@@ -67,19 +89,74 @@
         elem.hide();
       });
 
+      var anterior = $("#anterior").val();
+
+      var jaBuscou = (anterior.lenght > 0);
+
+      //alert("anterior="+anterior+", novo="+procura);
+
+
+      $("#anterior").val(procura);
+
+
       // procura aqueles que contém a string de busca
-      var procura = $(this).val();
+      //var procura = $(this).val();
+
       $("dl:contains("+procura+")").each(function(){
 
-        var elem = $(this);
-        elem.show();
+        if (procura.length >= 3) {
 
-        // destaca o texto buscado
-      //  var conteudo = elem.text();
-      //  var novo = conteudo.replaceAll("/"+procura+"/gi", function(x){return "<h3>"+procura+"</h3>";});
-      //  elem.html(novo);
+          // retira o texto de orientação
+          //$("#aviso").text("");
+
+          // obtem o DL clicado
+          var elem = $(this);
+          elem.show();
+
+          // seleciona apenas o conteudo em DD
+          var elementoDD = elem.find("dd");
+
+          // seleciona o conteudo original
+          var original = elem.find("div");
+
+          // obtem o conteudo que possui o texto buscado
+          var conteudo = original.html();
+
+          // retorna o texto ao estado anterior, caso já tenha buscado
+          if (jaBuscou) {
+            conteudo = conteudo.replace(new RegExp("<span class=destaca>"+original+"</span>", "ig"), original);
+          }
+
+          // destaca o texto buscado
+          var novo = conteudo.replace(new RegExp(procura, "ig"), "<span class=destaca>"+procura+"</span>");
+          //alert(novo);
+          //var novo = conteudo.replace(new RegExp(procura, "ig"), "<span class=destaca>"+procura+"</span>");
+
+          //adiciona ao novo o conteudo original novamente
+          novo = novo + "<div class=original>"+original.html()+"</div>";
+          elementoDD.html(novo);
+
+        }
+
+
 
       });
+
+    } else {
+      // texto de orientação
+      //$("#aviso").text("Digite ao menos 3 letras para exibir apenas as seções com o texto procurado. Acentos ainda não são ignorados: devem ser idênticos ao texto buscado.");
+
+      // mostra o indice de assuntos
+      $("#assuntos").show();
+
+      // mostra todos os elementos
+      $("dt").each(function(){
+        var elem = $(this).parent();
+        elem.css("border","0");
+        elem.show();
+      });
+    }
+
     });
 
   });
@@ -104,13 +181,24 @@
 
             <h2>Perguntas & Respostas sobre o TADS</h2>
 
-            O IFC disponibiliza <a href=http://ingresso.ifc.edu.br/category/perguntas-frequentes/cursos-de-graduacao/ target=_blank>perguntas e respostas frequentes sobre cursos de graduação</a>.
-            As perguntas e respostas a seguir têm sido construídas com base nas solicitações dos alunos
-            e na experiência dos coordenadores anteriores,
-            bem como no conhecimento que a secretaria tem sobre procedimentos acadêmicos.
-            Obrigado ao Vital e à Simone pelas diversas colaborações neste texto.
-            <hr>
-            Fique atualizado observando apenas as alterações efetuadas mensais: <br />
+            O IFC possui <a href=http://ingresso.ifc.edu.br/category/perguntas-frequentes/cursos-de-graduacao/ target=_blank>perguntas e respostas frequentes (FAQ: <i>frequently asked questions</i>) sobre cursos de graduação</a>.
+            O FAQ a seguir tem como base solicitações dos alunos, experiência de coordenadores anteriores e
+            o conhecimento de pessoas da secretaria.
+            Obrigado ao Vital e à Simone pelas colaborações.
+            Projetos pedagógicos do curso:
+            <a href=http://blumenau.ifc.edu.br/tads/wp-content/uploads/sites/8/2015/11/PPC.TADS_.pdf target=_blank>PPC 2014</a> (válido para alunos matriculados até 2016) e
+            <a href=http://blumenau.ifc.edu.br/tads/wp-content/uploads/sites/8/2015/11/PPC-TADS-2017-vers%C3%A3o-final.pdf target=_blank>PPC
+              2017</a>.
+            <hr />
+            <div class=center>
+            Busca por conteúdo: <input type=text id=busca />
+            <span id=aviso>
+Digite ao menos 3 letras para exibir apenas as seções com o texto procurado. É preciso usar acentos quando necessário.
+            </span>
+            <input type=hidden id=anterior value=""/>
+          </div>
+            <hr />
+            Observe apenas as alterações mensais: <br>
             2017:
             <a href=# class=news id="11/2017">11</a>
             | <a href=# class=news id="10/2017">10</a>
@@ -118,12 +206,10 @@
             | <a href=# class=news id="08/2017">08</a>
             | <a href=# class=news id="07/2017">07</a>
             | <a href=# class=news id="06/2017">06</a>
-            | <a href=# class=news id="05/2017">05</a> <br />
+            | <a href=# class=news id="05/2017">05</a>
             <a href=# class=todas>Visualizar todas</a>
-            <br />
-            <hr />
-            Busca por conteúdo: <input type=text id=busca />
-            <hr />
+
+          <hr>
             <div id=assuntos>
               Assuntos:
               <ul>
@@ -168,11 +254,7 @@
               </ul>
             </div>
             <br><br>
-            Muitas das informações constantes nessa página encontram-se nos projetos pedagógicos do curso,
-            disponíveis nestes links:
-            <a href=http://blumenau.ifc.edu.br/tads/wp-content/uploads/sites/8/2015/11/PPC.TADS_.pdf target=_blank>PPC 2014</a> (válido para alunos matriculados até 2016) e
-            <a href=http://blumenau.ifc.edu.br/tads/wp-content/uploads/sites/8/2015/11/PPC-TADS-2017-vers%C3%A3o-final.pdf target=_blank>PPC
-              2017</a> (válido para alunos matriculados a partir de 2017).
+
 
               <dl class="com-bordas" id="proficiencia">
                 <dt>Tenho conhecimentos sobre uma matéria que vai ser oferecida no próximo semestre.
