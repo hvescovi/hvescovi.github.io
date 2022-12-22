@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="hylson.css">
+  <title>
+    Perguntas e respostas sobre o TADS
+  </title>
+  <script src=jquery-3.2.1.min.js></script>
+  <script>
+    $(document).ready(function () {
+
+      //    $("#busca").focus();
+
+
+      // duplica todos os DD's para ter o conteudo original antes da busca
+      $("dd").each(function () {
+        var elem = $(this);
+        //elem.hide();
+        var original = elem.html();
+        var texto = elem.html();
+        // adiciona o conteudo anterior numa span escondida
+        var novo = original + "<div class=original>" + texto + "</div>";
+        elem.html(novo);
+        //elem.show();
+      });
+
+
+
+      // VISUALIZAR SOMENTE NOTICIAS DO MES/ANO
+      $(".news").click(function () {
+
+        // oculta o indice de assuntos
+        $("#assuntos").hide();
+
+        // oculta todos os elementos
+        $("dt:contains('.')").each(function () {
+          var elem = $(this).parent();
+          elem.css("border", "solid 3px red");
+          elem.hide();
+        });
+
+        // procura aqueles que contém no id "mes/ano." (observe o ponto ao final)
+        var eu = $(this);
+        var id = eu.attr("id");
+        var procura = id + ".";
+        $("dt:contains(" + procura + ")").each(function () {
+          var elem = $(this).parent();
+          elem.show();
+        });
+      });
+
+      // VISUALIZAR TODAS AS NOTÍCIAS
+      $(".todas").click(function () {
+
+        // mostra o indice de assuntos
+        $("#assuntos").show();
+
+        // mostra todos os elementos
+        $("dt:contains('.')").each(function () {
+          var elem = $(this).parent();
+          elem.css("border", "0");
+          elem.show();
+        });
+      });
+
+      // overwrite of the default contains selector
+      // https://css-tricks.com/snippets/jquery/make-jquery-contains-case-insensitive/
+      $.expr[":"].contains = $.expr.createPseudo(function (arg) {
+        return function (elem) {
+          return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+        };
+      });
+
+
+      $("#busca").keyup(function () {
+
+        var procura = $(this).val();
+
+        if (procura.length >= 3) {
+
+          // oculta o indice de assuntos
+          $("#assuntos").hide();
+
+          // oculta todos os elementos
+          $("dl:contains('.')").each(function () {
+            var elem = $(this);
+            elem.css("border", "solid 3px red");
+            elem.hide();
+          });
+
+          var anterior = $("#anterior").val();
+
+          var jaBuscou = (anterior.lenght > 0);
+
+          //alert("anterior="+anterior+", novo="+procura);
+
+
+          $("#anterior").val(procura);
+
+
+          // procura aqueles que contém a string de busca
+          //var procura = $(this).val();
+
+          $("dl:contains(" + procura + ")").each(function () {
+
+            if (procura.length >= 3) {
+
+              // retira o texto de orientação
+              //$("#aviso").text("");
+
+              // obtem o DL clicado
+              var elem = $(this);
+              elem.show();
+
+              // seleciona apenas o conteudo em DD
+              var elementoDD = elem.find("dd");
+
+              // seleciona o conteudo original
+              var original = elem.find("div");
+
+              // obtem o conteudo que possui o texto buscado
+              var conteudo = original.html();
+
+              // retorna o texto ao estado anterior, caso já tenha buscado
+              if (jaBuscou) {
+                conteudo = conteudo.replace(new RegExp("<span class=destaca>" + original + "</span>", "ig"), original);
+              }
+
+              // destaca o texto buscado
+              var novo = conteudo.replace(new RegExp(procura, "ig"), "<span class=destaca>" + procura + "</span>");
+              //alert(novo);
+              //var novo = conteudo.replace(new RegExp(procura, "ig"), "<span class=destaca>"+procura+"</span>");
+
+              //adiciona ao novo o conteudo original novamente
+              novo = novo + "<div class=original>" + original.html() + "</div>";
+              elementoDD.html(novo);
+
+            }
+
+
+
+          });
+
+        } else {
+          // texto de orientação
+          //$("#aviso").text("Digite ao menos 3 letras para exibir apenas as seções com o texto procurado. Acentos ainda não são ignorados: devem ser idênticos ao texto buscado.");
+
+          // mostra o indice de assuntos
+          $("#assuntos").show();
+
+          // mostra todos os elementos
+          $("dt").each(function () {
+            var elem = $(this).parent();
+            elem.css("border", "0");
+            elem.show();
+          });
+        }
+
+      });
+
+    });
+  </script>
+</head>
+
+<body>
+
+  <section class="container">
+    <div class="myheader">
+      <article>
+        <a href="http://blumenau.ifc.edu.br">IFC Bnu</a> | 
+        <a href=http://www.hylson.com/netto>Hylson</a> |
+        <a href="https://docs.google.com/document/d/1zPJfGPOL9lbsNWRc4Cso4t2xc0s7PUsjeDNcPm521zI/edit">FAQ anterior</a>.
+        <article>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="bilingual">
+      <article>
+        <h1 class="center">Perguntas & Respostas</h2>
+
+        <div class="center">
+          Busca por conteúdo: <input type=text id=busca />
+          <span id=aviso>
+            Digite ao menos 3 letras para exibir apenas as seções com o texto procurado. É preciso usar acentos quando
+            necessário.
+          </span>
+          <input type=hidden id=anterior value="" />
+        </div>
+        <hr />
+        Observe apenas as alterações mensais: <br>
+        2018:
+        <a href=# class=news id="01/2018">01</a>
+        <br>
+        2017:
+        <a href=# class=news id="12/2017">12</a>
+        | <a href=# class=news id="11/2017">11</a>
+        | <a href=# class=news id="10/2017">10</a>
+        | <a href=# class=news id="09/2017">09</a>
+        | <a href=# class=news id="08/2017">08</a>
+        | <a href=# class=news id="07/2017">07</a>
+        | <a href=# class=news id="06/2017">06</a>
+        | <a href=# class=news id="05/2017">05</a>
+        <a href=# class=todas>Visualizar todas</a>
+
+        <hr>
+        <div id=assuntos>
+          Assuntos:
+          <ul>
+            <!--      <li> <a href=#proficiencia>Proficiência</a> </li> -->
+            <li> <a href=#cadastro-incorreto>Dados cadastrais incorretos</a> </li>
+            <li> <a href=#reajuste>Reajuste</a> </li>
+            <!--                <li> <a href=#aproveitamento-de-disciplina>Aproveitamento de disciplina</a> </li> -->
+            <!--      <li> Trancamento <a href=#trancamento>[I]</a> <a href=#trancamento2>[II]</a> </li> -->
+            <!--                <li> <a href=#atividades-complementares>Atividades complementares</a> </li> -->
+            <!--      <li> <a href=#transferencia>Transferência</a> </li> -->
+            <li> <a href=#formas-de-ingresso-segundo-semestre>Ingresso no segundo semestre</a> </li>
+            <li> <a href=#reingresso-de-graduado>Reingresso de graduado</a> </li>
+            <li> <a href=#aproveitar-curso-tecnico>Vantagem de egresso de curso técnico para disciplinas do curso
+                superior</a> </li>
+            <li> <a href=#rematricula>Rematrícula</a> </li>
+            <!--              <li> <a href=#segunda-chamada-de-prova>Segunda chamada de prova</a> < /li> -->
+            <!--       <li> <a href=#defesa-tcc>Defesa de TCC</a> </li> -->
+            <!--                <li> <a href=#validar-estagio-com-trabalho>Validação de estágio obrigatório para quem trabalha em informática</a> </li> -->
+            <li> <a href=#defesa-tcc-2017-1>Defesa do TCC de 2017/1</a> </li>
+            <li> <a href=#porque-assistir-defesas-de-tcc>Por que um aluno deve assistir defesas de TCC</a> </li>
+            <!-- <li> <a href=#colar-grau>O que é preciso fazer para colar grau?</a> </li> -->
+            <!--                <li> <a href=#proxima-colacao-grau>Próxima colação de grau</a> </li> -->
+            <li> <a href=#regras-laboratorio-informatica>Regimento do laboratório de informática</a> </li>
+            <!--                <li> <a href=#validar-ACC-com-trabalho>Validação de atividades autônomas (complementares) para quem trabalha em informática</a> </li> -->
+            <li> <a href=#matricula>Matrícula</a></li>
+            <li> <a href=#cursos>Cursos</a></li>
+            <li> <a href=#tempo-limite>Prazo máximo para cumprir o curso</a></li>
+            <li> <a href=#sala-de-aula>Qual a sala de aula do TADS?</a></li>
+            <li> <a href=#mestrado>Após concluir o TADS, posso fazer mestrado?</a></li>
+            <!--                <li> <a href=#apos-defesa-tcc>O que devo fazer após a defesa de TCC?</a></li> -->
+            <li> <a href=#estagio-nao-obrigatorio>Sou aluno iniciante no TADS, posso fazer estágio?</a></li>
+            <li> <a href=#eventos>Quais eventos são propícios à participação de um aluno do TADS?</a></li>
+            <li> <a href=#atestado>Estou em atestado por período superior a 15 dias. Como devo proceder?</a></li>
+            <li> <a href=#carteirinha>Aluno do TADS pode ter carteirinha de estudante?</a></li>
+            <li> <a href=#enem>Qual a nota mínima do ENEM para ingresso no TADS?</a></li>
+            <li> <a href=#eventos-noturnos>Haverá aulas em noites nas quais ocorrem eventos (como festa Julina e noite
+                de Halloween)?</a></li>
+            <li> <a href=#defesa-tcc-2017-2>Quando ocorrerão as defesas de TCC em 2017/2?</a></li>
+            <li> <a href=#optativas-2018-1>Quais disciplinas optativas serão ofertadas em 2018/1?</a></li>
+            <li> <a href=#defesa-tcc-2018-1>Quando ocorrerão as defesas de TCC em 2018/1?</a></li>
+            <!--                <li> <a href=#alocacao-disciplinas-2018-1>Qual a alocação de horários das disciplinas do TADS para 2018/1?</a></li> -->
+            <!--                <li> <a href=#prazo-entrega-diploma>Após realizar a colação de grau, em quanto tempo receberei o diploma?</a></li> -->
+            <li> <a href=#enade>Eu preciso fazer a prova do ENADE?</a></li>
+            <li> <a href=#tccs>Como é um TCC do TADS?</a></li>
+            <li> <a href=#questionario-egresso>Quais alunos precisam responder ao questionário de egressos?</a></li>
+            <li> <a href=#destrancar>Estou trancado no curso, como voltar a estudar?</a></li>
+          </ul>
+          <br><br>
+        </div>
+
+        <!--
+              <dl class="com-bordas" id="proficiencia">
+                <dt>Tenho conhecimentos sobre uma matéria que vai ser oferecida no próximo semestre.
+                  Posso obter vantagem com isso?
+                  <i>Atualizado em 23/08/2017. <s>16/08/2017</s> <s>15/08/2017</s> <s>28/07/2017</s> <s>14/07/2017</s> <s>03/07/2017</s> <s>24/05/2017</s> <s>22/05/2017</s> <s>18/05/2017</s> <s>06/04/2017</s></i>
+                </dt>
+                <dd>Sim. Você pode solitar uma prova de proficiência na disciplina.
+                  Esse pedido pode ser feito na secretaria.
+                  É preciso estar matriculado na disciplina a qual deseja-se solicitar a proficiência.
+
+                  <!--Para alunos matriculados a partir de 2017, é possível solicitar essa avaliação apenas se o aluno ainda não cursou a disciplina. COMENTAR ESSA LINHA
+
+                  Outro pré-requisito para realizar a prova de proficiência é que o aluno não pode ter sido reprovado na disciplina pleiteada.
+                  Por consequência, o aluno pode solicitar a proficiência uma única vez para cada disciplina.
+                  Você deve obter a ementa da disciplina: procure no apêndice A do <a href=http://blumenau.ifc.edu.br/tads/wp-content/uploads/sites/8/2015/11/PPC-TADS-2017-vers%C3%A3o-final.pdf target=_blank>PPC TADS 2017</a> (ou no <a href=http://blumenau.ifc.edu.br/tads/wp-content/uploads/sites/8/2015/11/PPC.TADS_.pdf target=_blank>PPC 2014</a>, caso você tenha ingressado no curso antes de 2017) para estudar o que vai ser cobrado na prova de proficiência.
+                  Para o segundo semestre de 2017,
+                  o período de solicitação da proficiência (também conhecida como Exame de Suficiência, ou Avaliação de Extraordinário Aproveitamento de Estudos)
+                  está entre 24 e 28 de Julho, conforme <a href=http://blumenau.ifc.edu.br/wp-content/uploads/2017/01/Blumenau-Cursos-Superiores-2017.pdf target=_blank>calendário acadêmico dos cursos superiores</a> (disponível em <a href=http://blumenau.ifc.edu.br/ target=_blank>http://blumenau.ifc.edu.br/</a>, menu Ensino > Calendário Superior).
+                  A avaliação de proficiência está regulamentada na seção 14 do <a href=http://blumenau.ifc.edu.br/tads/wp-content/uploads/sites/8/2015/11/PPC-TADS-2017-vers%C3%A3o-final.pdf target=_blank>PPC
+                    TADS 2017</a>.
+
+                    <br />
+
+                    O <i>Fluxo</i> do pedido ocorre da seguinte maneira: o pedido é enviado da secretaria para o coordenador do curso, que encaminha o pedido ao professor da disciplina.
+                    O professor fará a prova de proficiência,
+                    marcará uma data diretamente com os alunos solicitantes (por email) e aplicará a prova.
+                    O coordenador do curso solicita então a criação de uma comissão para homologar as provas de proficiência.
+                    Concluída a homologação, os pedidos retornam à secretaria.
+                    O resultado é divulgado no site de acordo com data estabelecida no calendário acadêmico.
+                    O resultado deve ser divulgado antes do término do período de ajuste de matrícula,
+                    caso o solicitante esteja matriculado na disciplina a qual está tentando validar a proficiência.
+
+                    <br />
+                    É possível que o aluno aprovado em proficiência matricule-se em outra disciplina que seja ministrada no mesmo dia da disciplina aprovada na proficiência.
+                    Basta, após o resultado da proficiência, entrar em contato com a coordenação do curso (tads@blumenau.ifc.edu.br), descrever a situação e solicitar a matrícula na nova disciplina.
+                    Em 2017/2, os alunos aprovados em proficiência que desejam fazer uso do dia liberado pela aprovação para cursar outra disciplina devem enviar seu pedido para tads@blumenau.ifc.edu.br entre os dias 21/08/2017 e 25/08/2017.
+                    Verifique no <a href=https://docs.google.com/spreadsheets/d/1b9ApO0CNPU7EEvd0AG2zMKiPvLXsfjCbgar8EVf5H1Q/edit?ts=59484104#gid=0 target=_blank>cronograma de disciplinas do TADS 2017/2</a> as aulas que estão ocorrendo para observar qual disciplina você poderá solicitar matrícula.
+                  </dd>
+                </dl>
+
+-->
+
+        <dl class="com-bordas" id="cadastro-incorreto">
+          <dt>
+            O status de meu cadastro está incorreto (por exemplo, "ativo-formando"). É possível corrigir isso?
+          </dt>
+          <dd>
+            Sim. Nesse caso, a alteração deve ser feita pela PROEN (o coordenador de curso não tem acesso a essa opção).
+            Última atualização dessa informação: 06/04/2017.
+          </dd>
+        </dl>
+
+        <dl class="com-bordas" id="reajuste">
+          <dt>
+            Eu gostaria de me matricular em uma disciplina, ou cancelar a matrícula.
+            Porém, o prazo de reajuste já encerrou. É possível fazer a alteração desejada?
+            <i>Atualizado em 26/07/2017.<s>11/04/2017</s></i>
+          </dt>
+          <dd>
+            De maneira geral, não.
+            O cronograma de reajuste existe para limitar o prazo no qual os alunos podem solicitar
+            matrícula em disciplinas ou cancelar matrículas.
+            No primeiro semestre, o prazo de reajuste encerrou-se em 17/03/2017, <a
+              href=http://ifc.edu.br/wp-content/uploads/2014/05/Blumenau-Cursos-Superiores-2017.pdf
+              target=_blank>conforme calendário</a>.
+            No segundo semestre, o prazo de reajuste final é o dia 28/07/2017.
+            Em casos excepcionais,
+            é possível solicitar à PROEN que faça esse ajuste em data seguinte ao prazo.
+            Porém, apenas em casos excepcionais.
+          </dd>
+        </dl>
+
+        <!--
+
+                <dl class="com-bordas" id="aproveitamento-de-disciplina">
+                  <dt>
+                    Eu já cursei parcialmente outro curso superior.
+                    É possível eliminar algumas matérias do TADS, com base nas matérias nas quais fui aprovado no curso superior que eu já cursei?
+                    <i>Atualizado em 26/07/2017. <s>14/07/2017</s> <s>24/05/2017</s> <s>12/04/2017</s></i>
+                  </dt>
+                  <dd>
+                    Possivelmente sim.
+                    Após se matricular no TADS, é possível solicitar a validação de estudos realizados,
+                    desde que os conteúdos estudados contemplem ao menos 75% do conteúdo da disciplina.
+                    Além disso, a frequência do aluno deve ser no mínimo de 75%.
+                    É possível inclusive combinar mais de um componente curricular para validação do
+                    componente curricular pretendido (veja a
+                    <a href=http://ifc.edu.br/wp-content/uploads/2014/05/RESOLUCAO-057-2012-org-didatica-SUP.pdf target=_blank>organização didática dos cursos superiores</a>, artigo 51, segundo parágrafo).
+                    O aluno deve pedir essa validação na secretaria.
+                    No primeiro semestre de 2017,
+                    foi permitido solicitar aproveitamento de estudos entre os dias 13 e 17 de março, <a href=http://ifc.edu.br/wp-content/uploads/2014/05/Blumenau-Cursos-Superiores-2017.pdf target=_blank>conforme calendário</a>.
+                    No segundo semestre,
+                    o período para solicitar o aproveitamento localiza-se entre os dias 24 e 28 de Julho.
+                    O pedido seguirá da secretaria para o coordenador do curso, que encaminhará o pedido a professor responsável pela disciplina.
+                    O professor fará a avaliação da solicitação.
+                    Após parecer do professor, o pedido retorna ao coordenador.
+                    Após o encerramento do período de solicitações, é criada uma comissão que homologará as solicitações.
+                    Confira as <a href=06-orientacoes-pedido-aproveitamento-estudos-2017-2.odt>recomendações elaboradas pela secretaria</a>, sobre aproveitamento.
+                  </dd>
+                </dl>
+-->
+        <!--
+                <dl class="com-bordas" id="trancamento">
+                  <dt>
+                    Estou com problemas para acompanhar uma certa disciplina.
+                    Gostaria de cancelar minha matrícula nessa disciplina.
+                    Porém, o <a href=teaching-tads-faq.html#reajuste>período de reajuste já se encerrou</a>.
+                    O que posso fazer? <i>Atualizado em 03/07/2017. <s>26/07/2017</s> <s>06/06/2017</s> <s>17/04/2017</s></i>
+                  </dt>
+                  <dd>
+                    Não é possível cancelar a matrícula em disciplinas específicas após o período de reajuste.
+                    Existe, porém, a opção de trancar o curso.
+                    Neste caso, o curso inteiro será interrompido (todas as disciplinas).
+                    Essa opção está disponível até um certo prazo.
+                    Para o primeiro semestre de 2017, esse prazo vai até o dia 28/04/2017,
+                    <a href=http://ifc.edu.br/wp-content/uploads/2014/05/Blumenau-Cursos-Superiores-2017.pdf target=_blank>conforme calendário</a>.
+                    No segundo semestre de 2017, o trancamento de matrícula pode ser feito desde o dia 11 de Julho até o dia 14 de Julho, num primeiro momento.
+                    A seguir, poderá ser feito entre os dias 25 a 28 de Julho (reajuste de matrículas).
+                    A partir daí, o trancamento poderá ser feito até o dia 22 de Setembro.
+                    O aluno pode fazer a solicitação de trancamento de curso através do <a href=https://sig.ifc.edu.br/sigaa>SIGAA</a>.
+                    Basta seguir as opções: Ensino > Suspensão de programa > Suspensão regular.
+
+                    <br><br>
+                    O aluno não consegue realizar o trancamento após o prazo máximo mencionado.
+                    É possível solicitar diretamente ao coordenador de curso (por email) o trancamento do curso,
+                    porém é muito raro que uma situação seja homologada para trancamento fora do prazo regular.
+                    O aluno conseguirá realizar o trancamento durante o período de matrículas do próximo semestre.
+                    Caso o aluno não faça matrícula e não realize o trancamento, a secretaria fará o trancamento.
+                    O aluno pode permanecer por até 4 semestres (consecutivos ou não) com a matrícula trancada.
+                    A partir desse limite, o aluno será desligado do curso (jubilado).
+                  </dd>
+                </dl>
+
+                <dl class="com-bordas" id="trancamento2">
+                  <dt>
+                    Estou com problemas para acompanhar o curso (motivos particulares ou outras questões).
+                    O que posso fazer?
+                  </dt>
+                  <dd>
+                    Verifique a resposta que trata de <a href=#trancamento>trancamento de curso</a>.
+                    Última atualização dessa informação: 17/04/2017.
+                  </dd>
+                </dl>
+
+-->
+
+        <!--
+                <dl class="com-bordas" id="atividades-complementares">
+                  <dt>
+                    Como posso lançar atividades complementares?
+                    <i>Atualizado em 28/06/2017. <s>27/06/2017</s>. <s>14/06/2017</s> <s>18/05/2017</s> <s>05/05/2017</s> </i>
+                  </dt>
+                  <dd>
+                    As atividades complementares devem ser lançadas no SIGAA, dentro de um período que será definido em breve.
+                    Para alunos que não estão no último semestre/ano, possivelmente será definido o período entre 03/04/2017 até 30/11/2017.
+                    Para alunos que estão no último semestre, o prazo para o lançamento das atividades complementares será de até 60 dias antes da formatura.
+                    <a href=http://consuper.ifc.edu.br/wp-content/uploads/sites/14/2014/07/RESOLU%C3%87%C3%83O-043-2013-Aprova-altera%C3%A7%C3%A3o-na-Res.-048-2010-COMPLETA-consolidada-com-as-altera%C3%A7%C3%B5es.pdf target=_blank>Veja aqui a resolução</a> que define as possíveis atividades complementares.
+                    O aluno deve cursar pelo atividades complementares de pelo menos 3 modadidades diferentes, entre das 5 modalidades disponíveis.
+                    <a href=01-atividade-complementar-discente.png target=_blank>CLIQUE AQUI</a> para visualizar as instruções de como lançar as atividades complementares no SIGAA.
+                    Os documentos comprobatórias das atividades complementares devem estar disponíveis nos idiomas português ou inglês.
+                    Comprovantes em outros idiomas devem acompanhar por uma tradução juramentada.
+                    No comprovante deve constar a QUANTIDADE DE HORAS as quais o aluno está solicitando a validação.
+                    Os alunos podem lançar atividades realizadas desde 1 ano antes do ingresso do aluno no curso até o último semestre (artigo 6).
+                  </dd>
+                </dl>
+
+-->
+
+        <!--
+                <dl class="com-bordas" id="transferencia">
+                  <dt>
+                    Eu estudo em um curso superior na área de informática, em outra instituição de ensino,
+                    e gostaria de me transferir para o IFC.
+                    É possível? <i>Atualizado em 28/11/2017. <s>03/07/2017 22/05/2017 17/04/2017</s> </i>
+                  </dt>
+                  <dd>
+                    Sim.
+                    Você deve acompanhar o lançamento de editais de transferência.
+                    Veja como exemplos os editais de <a href=http://noticias.ifc.edu.br/wp-content/uploads/sites/7/2017/05/Edital-264-TIERPD-2017-1-Superior.pdf target=_blank>2017/1</a>
+                    e <a href=http://ingresso.ifc.edu.br/2017/10/11/edital-no-0242017-blumenau/ target=_blank>2017/2</a>.
+                      Outras informações podem ser obtidas no
+                      <a href=http://ingresso.ifc.edu.br/category/superior/ target=_blank>Portal do Ingresso</a>.
+                      Um detalhe relevante é que o edital de transferência só é aberto quando houver vagas, ou seja, em caso de desistência de alunos regulares.
+                      Editais de transferência podem ser lançados até duas vezes por ano: uma para ingresso no começo do ano e outra para ingresso na metade do ano.
+                      Se você estuda no IFC e deseja se transferir para outra instituição, é preciso observar os editais de transferência das outras instituições.
+                      Por exemplo, veja <a href=http://www.ifsc.edu.br/ingresso-inicio target=_blank>informações sobre ingresso no IFSC</a>.
+                    </dd>
+                  </dl>
+
+-->
+
+        <dl class="com-bordas" id="formas-de-ingresso-segundo-semestre">
+          <dt>
+            É possível ingressar no IFC no segundo semestre do ano?
+            E quais são as formas de ingresso?
+            <i>Atualizado em 11/12/2017. <s>22/05/2017</s> </i>
+          </dt>
+          <dd>
+            Sim, é possível!
+            Até duas vezes por ano, no IFC, ocorre um
+            <a href=http://noticias.ifc.edu.br/wp-content/uploads/sites/7/2017/05/Edital-264-TIERPD-2017-1-Superior.pdf
+              target=_blank>
+              edital de transferência interna, transferência externa e reingresso de graduados</a>.
+            Esse edital permite o ingresso em cursos superiores do IFC.
+            Leia o <a
+              href=http://noticias.ifc.edu.br/wp-content/uploads/sites/7/2017/05/Edital-264-TIERPD-2017-1-Superior.pdf
+              target=_blank>edital</a> para maiores informações.
+            Há ainda outras informações no <a
+              href=http://blumenau.ifc.edu.br/noticias/2017/05/22/campus-oferece-12-vagas-para-transferencia-para-cursos-superiores/
+              target=_blank>portal de notícias do IFC</a>.
+            <br>
+            Basicamente, há 3 formas de ingresso no TADS do IFC:
+            <ol>
+              <li>ENEM/Sisu.</li>
+              <li>Edital de vagas não ocupadas pelo ENEM: quando há vagas remanescentes do ENEM, é aberto um edital no
+                qual
+                pessoas interessadas em cursar o TADS podem se inscrever. O processo seletivo geralmente leva em conta o
+                histórico escolar (não há vestibular específico para o TADS).
+                Confira no site de ingresso do IFC um <a
+                  href=http://ingresso.ifc.edu.br/category/perguntas-frequentes/ingresso/#I1 target=_blank>texto
+                  complementar</a> sobre essa modalidade.
+              </li>
+              <li>
+                Edital de transferência interna, externa e reingresso de graduado, conforme descrito anteriormente nesta
+                resposta.
+              </li>
+            </ol>
+
+          </dd>
+        </dl>
+
+        <dl class="com-bordas" id="reingresso-de-graduado">
+          <dt>
+            Eu já sou formado em um curso superior.
+            É possível ingressar no IFC por outro meio que não o ENEM?
+          </dt>
+          <dd>
+            Sim, é possível!
+            O reingresso de graduados é uma modalidade na qual pode-se ingressar no IFC por meio de vagas remanescentes
+            que são definidas em um edital específico para tal fim.
+            Veja mais detalhes na pergunta sobre <a href=#formas-de-ingresso-segundo-semestre>formas de ingresso no
+              segundo semestre</a>.
+            Última atualização dessa informação: 06/06/2017.
+          </dd>
+        </dl>
+
+        <dl class="com-bordas" id="aproveitar-curso-tecnico">
+          <dt>
+            Sou formado em um curso técnico em informática.
+            É possível ingressar no curso superior de informática e aproveitar notas do meu curso técnico?
+          </dt>
+          <dd>
+            Não.
+            As disciplinas de nível técnico não podem ser reaproveitadas em nível superior.
+            Entretanto, após ingressar em um curso superior é possível tentar <a href=#proficiencia>obter a
+              proficiência</a> em algumas disciplinas do curso.
+            Última atualização dessa informação: 22/05/2017.
+          </dd>
+        </dl>
+
+        <dl class="com-bordas" id="rematricula">
+          <dt>
+            Eu perdi o prazo de matrícula.
+            Como faço para retornar ao curso?
+          </dt>
+          <dd>
+            É preciso observar o calendário do próximo semestre para efetuar a matrícula.
+            Em 2017/1, o primeiro período de matrículas ocorreu de 30/01/2017 a 03/02/2017,
+            <a href=http://ifc.edu.br/wp-content/uploads/2014/05/Blumenau-Cursos-Superiores-2017.pdf
+              target=_blank>conforme o calendário</a>.
+            Nesse período os alunos calouros fazem a matrícula na secretaria e os veteranos fazem o pedido online (via
+            SIGAA).
+            Os pedidos de Transferência Interna, Externa e Retorno de Portadores de Diploma são feitos via secretaria.
+            O segundo período de matrícula (rematrícula) ocorreu entre 07/02/2017 a 10/02/2017.
+            Esse período consiste basicamente de uma segunda chance para fazer matrículas, conforme período anterior.
+            O período de matrícula seguinte, de 14/02/2017 a 17/03/2017, foi destinado ao <a href=#reajuste>reajuste de
+              matrículas</a>.
+            Nesse período, caso o aluno não tenha feito a matrícula ainda, é necessário solicitar a matrícula ao
+            coordenador de curso (por email: tads@blumenau.ifc.edu.br),
+            justificando (com documentação) o porquê da perda dos prazos anteriores.
+            Nesse caso, o coordenador encaminha o pedido/ajuste de matrícula para a secretaria (por e-mail) efetivar.
+            Após o dia 17/03/2017, alunos que não solicitaram matrícula tiveram sua situação alterada para "trancado".
+            Nesse caso, apenas no próximo semestre é possível retornar ao curso, efetuando uma nova matrícula.
+            A matrícula para o segundo período de 2017 inicia em 14/07/2017.
+            Caso o aluno permaneça trancado por 4 semestres consecutivos, o aluno é jubilado no quinto semestre.
+            Última atualização dessa informação: 04/05/2017.
+          </dd>
+        </dl>
+
+
+        <!--
+
+
+                    <dl class="com-bordas" id="segunda-chamada-de-prova">
+                      <dt>
+                        Eu perdi uma avaliação.
+                          Posso solicitar uma segunda chamada? Atualizado em 26/10/2017. <s>05/07/2017</s> <s>26/07/2017</s> <s>21/06/2017</s> <s>03/05/2017</s>
+                      </dt>
+                      <dd>
+                        Sim.
+                        A segunda chamada pode ser solicitada na secretaria, no prazo de <b>3 (três) dias</b> úteis após a realização da atividade (conforme artigo 69, parágrafo 1, da <a href=http://ifc.edu.br/wp-content/uploads/2014/05/RESOLUCAO-057-2012-org-didatica-SUP.pdf target=_blank>resolução 057/2012 do CONSUPER</a>).
+                        *** PORÉM *** é preciso que essa solicitação seja comprovadamente justificada.
+                        Segue abaixo uma lista (não-exaustiva) de justificativas que são aceitáveis:
+                        <ol>
+
+                          <li>
+                            Alunos com doenças infecto contagiosas (<a href=http://www.planalto.gov.br/ccivil_03/decreto-lei/Del1044.htm target=_blank>Decreto Lei 1044, de 21/10/1969</a>), devidamente comprovadas.
+                            O atestado médico só terá validade se possuir a assinatura e CRM do médico e o CID da doença.
+                          </li>
+
+                          <li>
+                            Gestantes (<a href=http://www.planalto.gov.br/ccivil_03/leis/1970-1979/l6202.htm target=_blank>Lei 6202, de 17/04/1975</a>) sob impedimento devidamente comprovado.
+                          </li>
+
+                          <li>
+                            Profissionais que trabalhem em regime de plantão.
+                            Profissionais como: bombeiros, policiais, médico, enfermeiro,
+                            auxiliar de enfermagem, nutricionistas, psicólogos entre outros
+                            que trabalhem em regime de plantão devem anexar uma declaração da
+                            instituição (em papel timbrado com o nome e o carimbo do responsável).
+                          </li>
+
+                          <li>
+                            Luto, casamento, convocação para atividades cívicas ou jurídicas.
+                          </li>
+
+                          <li>
+                            <s>Impedimento por motivos religiosos.</s>
+                          </li>
+
+                        </ol>
+
+                        Motivos religiosos ainda <a href=http://portal.mec.gov.br/cne/arquivos/pdf/pces224_06.pdf target=_blank>não são suficientes<a/> para justificar ausências em aulas ou provas.
+                          <a href=http://www12.senado.leg.br/noticias/materias/2016/06/15/motivo-religioso-podera-justificar-ausencia-escolar-e-remarcacao-de-provas target=_blank>Essa situação poderá mudar</a>,
+                          mas no momento não há legislação que ampare esse aspecto.
+
+                          <br><br>
+                          Todas as solicitações devem vir acompanhadas de COMPROVAÇÃO.
+                          É sugerido a estudantes trabalhadores <a href=https://jus.com.br/duvidas/279168/sou-trabalhador-estudante-posso-exigir-da-minha-empresa-uma-jornada-de-trabalho-menor target=_blank>negociar com a empresa</a> liberação em dias especiais (por exemplo, dias de prova).
+                          <a href=http://www.contabeis.com.br/forum/topicos/99961/trabalhador-estudante/ target=_blank>Veja aqui outro exemplo de sugestão dessa negociação</a>.
+
+                          <br><br>
+                          A cidade de Blumenau possui a <a href=http://www.oktoberfestblumenau.com.br/ target=_blank>Ocktoberfest</a>, a maior festa alemã do Brasil.
+                          Durante o período de festa, o trânsito é alterado, e atrasos podem ocorrer no trajeto até o IFC.
+                          Porém, esse cenário não configura motivo válido para solicitar segunda chamada de avaliações.
+                          Durante a Ocktoberfest, recomenda-se que os alunos antecipem a ida para o IFC,
+                          prevenindo possíveis atrasos gerados pelo trânsito acentuado.
+
+                          <br><br>
+                          Se não for possível obter a comprovação juntamente com a solicitação da segunda chamada,
+                          sugere-se que o aluno faça a solicitação respeitando o prazo de até três dias após a atividade em questão,
+                          e mencione que está em processo de obtenção da devida comprovação.
+                          É fundamental também conversar com o professor da atividade em questão para deixá-lo ciente da situação.
+                          É importante informar o quanto antes ao professor da disciplina quaisquer situações de segunda chamada de prova.
+                          O <a href=http://blumenau.ifc.edu.br/secretaria/wp-content/uploads/sites/21/2016/06/Formul%C3%A1rio-2chamada-de-provas-CURSOS-T%C3%89CNICOS-e-Superiores1.pdf target=_blank>formulário de segunda chamada de provas está disponível</a>
+                          no <a href=http://blumenau.ifc.edu.br/secretaria/formularios-e-requerimentos/formulariosrequerimentos-ensino-superior/ target=_blank>site da secretaria</a>.
+
+                          <br><br>
+                          Em caso de impossibilidade (comprovada) de entregar o formulário na secretaria,
+                          é possível obter o formulário <a href=http://blumenau.ifc.edu.br/secretaria/formularios-e-requerimentos/formulariosrequerimentos-ensino-superior/ target=_blank>site da secretaria</a>, preenchê-lo, assinar, escanear e enviar para a secretaria (via email secretaria@blumenau.ifc.edu.br),
+                          a fim de atender ao prazo de 3 (três) dias úteis após a realização da atividade.
+                          <br><br>
+                          Seguem algumas referências utilizadas nesta resposta:
+                          <a href=https://ead.ufsc.br/administracao/formularios/segunda-chamada-de-prova-2/ target=_blank>[1]</a>,
+                          <a href=http://www.ufjf.br/bach/academico/provas-e-notas/2a-chamada-de-prova/ target=_blank>[2]</a>,
+                          <a href=https://espaco-vital.jusbrasil.com.br/noticias/2481529/estudante-de-direito-pode-fazer-prova-em-segunda-chamada target=_blank>[3]</a>,
+                          <a href=http://graccho.com.br/segundachamada target=_blank>[4]</a>.
+                        </dd>
+                      </dl>
+
+
+-->
+
+        <!--
+                      <dl class="com-bordas" id="defesa-tcc">
+                        <dt>
+                          Estou concluindo o meu curso e gostaria de saber com o faço para apresentar o meu TCC.
+                        </dt>
+                        <dd>
+                          Para apresentar o TCC é preciso:
+                          <ol>
+                            <li>Ter a aprovação/autorização/aval do professor orientador quanto à qualidade do trabalho a ser apresentado;</li>
+                            <li>Ter integralizado pelo menos 60% da carga horária total do curso (artigo 30 da
+                              <a href=http://ifc.edu.br/wp-content/uploads/2014/05/Portaria-Normativa-com-as-Diretrizes-Para-as-Licenciaturas_0092016.pdf target=_blank>portaria
+                                normativa 009 de 03/11/2016</a>).</li>
+                              </ol>
+                              O professor orientador deve pertencer ao quadro de docentes do campus.
+                              De posse dessa autorização do orientador (pode ser, por exemplo, um email do orientador),
+                              basta manifestar ao coordenador do curso (via email tads@blumenau.ifc.edu.br) a intenção em defender o TCC.
+-->
+        <!-- O aluno não precisa estar cursando o último semestre para defender o TCC.-->
+        <!--
+                              <br><br>
+                              Certifique-se (com ciência do orientador) de que o seu TCC segue o <a href=https://docs.google.com/document/d/18WfKMePwJXbfu2QgJFCc0Zw7w4yrvcyG764789w_D6c/edit target=_blank>padrão utilizado no IFC para a construção do TCC</a> no TADS.
+
+                              Última atualização dessa informação: 09/06/2017. <s>18/05/2017</s>.
+                            </dd>
+                          </dl>
+-->
+
+        <!--
+                          <dl class="com-bordas" id="validar-estagio-com-trabalho">
+                            <dt>
+                              Eu trabalho na área de informática.
+                              Posso validar o estágio obrigatório a partir do meu trabalho?
+                              Atualizado em 06/07/2017. <s>09/06/2017</s><s>23/05/2017</s>
+                            </dt>
+                            <dd>
+                              Sim.
+                              Para iniciar o seu estágio, você deve acessar o <a href=http://blumenau.ifc.edu.br/documentos-do-estagio/ target=_blank>site de extensão do IFC</a>,
+                              Campus Blumenau, e preencher alguns documentos listados.
+                              Segue uma breve explicação sobre cada um deles:
+                              <ol>
+                                <li>
+                                  Solicitação de pedido de Convênio entre empresa/instituição e o IFC:
+                                  caso a empresa na qual você atua (ou irá atuar) não possua convênio com o IFC,
+                                  é necessário preencher esse formulário para estabelecer o convênio.
+                                </li>
+                                <li>
+                                  Formulário de Solicitação de Orientação: todo estágio precisa ser acompanhado por um professor.
+                                </li>
+                                <li>
+                                  Solicitação de Matrícula em Estágio Curricular: esse é o pedido de matrícula na disciplina de estágio.
+                                  É preciso ter concluído 60% do curso para efetivar esse pedido.
+                                </li>
+                                <li>
+                                  Para o estágio obrigatório, há o Termo de Compromisso Estágio Obrigatório.
+                                </li>
+                              </ol>
+                              Adicionalmente, para realizar o estágio obrigatório na empresa em que já trabalha,
+                              o aluno deve preencher o <a href=http://blumenau.ifc.edu.br/wp-content/uploads/2016/03/09-Formulario-de-Solicita%C3%A7%C3%A3o-de-valida%C3%A7%C3%A3o-de-horas-de-est%C3%A1gio-TADS.doc target=_blank>formulário de validação de horas de estágio</a>.
+                              Uma informação importante é a validação só ocorre a partir do momento em que o aluno inicia a formalização do estágio junto ao setor de estágio.
+
+-->
+        <!-- Apenas os 2 últimos anos de trabalho podem ser aproveitados para tal fim. -->
+
+        <!--
+                              Anos anteriores podem ser aproveitados em atividades complementares, na modalidade de estágio não-obrigatório.
+                              Os servidores Fabiano e Péricles
+                              <a href=http://blumenau.ifc.edu.br/contato/ target=_blank>estão disponíveis para atendimento</a> também no período noturno, no caso de esclarecimento de dúvidas sobre o estágio obrigatório.
+                            </dd>
+                          </dl>
+
+-->
+        <dl class="com-bordas" id="defesa-tcc-2017-1">
+          <dt>
+            Quais os alunos que deverão apresentar o TCC em 2017/1? <i>Atualizado em 03/07/2017. <s>28/09/2017</s>
+              <s>23/05/2017</s></i>
+          </dt>
+          <dd>
+            A tabela abaixo lista os nomes dos alunos que manifestaram até o momento a intenção em defender o TCC
+            (enviaram email para o tads@blumenau.ifc.edu.br) e a respectiva situação.
+            <table>
+              <th>
+                <tr>
+                  <td>Aluno</td>
+                  <!--           <td>Quando confirmou a intenção de defender o TCC?</td> -->
+                  <td>Orientador</td>
+                  <td>Situação</td>
+                </tr>
+              </th>
+
+              <tbody>
+
+                <tr>
+                  <td>MOACIR ZIMERMANN JUNIOR</td>
+                  <!--           <td>21/05/2017</td> -->
+                  <td>Adriano Pessini</td>
+                  <td>Defesa confirmada para o dia 05/07/2017, das 19hs às 20hs, na sala D-04.
+                    Título do projeto: ESTACIONE - Sistema para Estacionamentos Rotativos.</td>
+                </tr>
+
+                <tr>
+                  <td>MARCO ANTONIO ROSSI JUNIOR</td>
+                  <!--           <td>18/05/2017</td> -->
+                  <td>Adriano Pessini</td>
+                  <td>Defesa confirmada para o dia 05/07/2017, das 20hs às 21hs, na sala D-04.
+                    Título do projeto: SISLAY: Sistema de Controle de Requisições de Layout.
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>PEDRO HENRIQUE RODRIGUES SOARES</td>
+                  <!--           <td>18/05/2017</td> -->
+                  <td>Ricardo de La Rocha Ladeira</td>
+                  <td>Defesa confirmada para o dia 06/07/2017, das 19hs às 20hs, na sala D-04.
+                    Título do projeto: Desenvolvimento de um Sistema Web para Gerenciamento de Estoque Veicular.
+                  </td>
+                </tr>
+                <!--
+                                    <tr>
+                                    <td>MATEUS MORAES BUENO</td>
+                                    <td>29/05/2017</td>
+                                    <td>Paulo César Rodacki Gomes</td>
+                                    <td></td>
+                                  </tr>
+                                -->
+              </tbody>
+            </table>
+          </dd>
+        </dl>
+
+        <dl class="com-bordas" id="porque-assistir-defesas-de-tcc">
+          <dt>
+            Ao assistir uma defesa de TCC, o aluno recebe alguma comprovação dessa participação? <i>Atualizado em
+              28/09/2017.</i>
+          </dt>
+          <dd>
+            Sim.
+            Ao assistir a defesa, o aluno deverá assinar uma lista de presença.
+            Quando necessário, o aluno pode solicitar ao coordenador de curso uma declação atestando que o aluno
+            assistiu a defesa.
+            Segundo a <a
+              href=http://consuper.ifc.edu.br/wp-content/uploads/sites/14/2014/07/RESOLU%C3%87%C3%83O-043-2013-Aprova-altera%C3%A7%C3%A3o-na-Res.-048-2010-COMPLETA-consolidada-com-as-altera%C3%A7%C3%B5es.pdf
+              target=_blank>
+              resolução 43 do CONSUPER/2013
+            </a>, com o certificado dessa participação o aluno pode solicitar
+            uma atividade autônoma do tipo 'PARTICIPAÇÃO COMO OUVINTE EM DEFESAS PÚBLICAS DE TESES, DISSERTAÇÕES OU
+            MONOGRAFIAS',
+            atividade pertencente à modalidade 'pesquisa'.
+            É preciso que o aluno valide, durante o seu curso, atividades complementares nas modalidades de ensino,
+            pesquisa e extensão.
+          </dd>
+        </dl>
+
+        <!--
+                        <dl class="com-bordas" id="colar-grau">
+                          <dt>
+                            Quais são os requisitos para participar da formatura/colação de grau?
+                            <i>Atualizado em 26/10/2017. <s>17/08/2017</s> <s>26/07/2017</s> <s>09/06/2017</s> </i>
+                          </dt>
+                          <dd>
+                            Os requisitos são os seguintes:
+                            <ol>
+
+                              <li>
+                                Biblioteca: o aluno não deve possuir pendências junto à biblioteca (livros emprestados, multa, etc).
+                                Comprovante: autenticar o <a href=02-Comprovacao-Entrega-TCC.odt target=_blank>Formulário de entrega de TCC</a> na biblioteca.
+                              </li>
+                              <li>
+                                Extensão: o aluno deve ter realizado o estágio obrigatório.
+                                Se você trabalha na área de informática,
+                                verifique <a href=#validar-estagio-com-trabalho>como validar suas horas de estágio
+                                  obrigatório no seu trabalho</a>.
+                                  Comprovante: solicitar declaração à coordenação de extensão (extensao@blumenau.ifc.edu.br).
+                                </li>
+                                <li>
+                                  Disciplinas: o aluno precisa ter concluído todas as disciplinas,
+                                  independentemente da maneira de conclusão (proficiência, curso regular da disciplina, aproveitamento).
+                                  Comprovante: gerar o histórico no SIGAA.
+                                </li>
+                                <li>
+                                  Atividades complementares: o aluno deve ter atividades complementares aprovadas, em quantidade igual ou superior a 200 horas.
+                                  É preciso participar em atividades de ensino, pesquisa e extensão
+                                  (veja o segundo parágrafo do sexto artigo da
+                                  <a href=http://consuper.ifc.edu.br/wp-content/uploads/sites/14/2014/07/RESOLU%C3%87%C3%83O-043-2013-Aprova-altera%C3%A7%C3%A3o-na-Res.-048-2010-COMPLETA-consolidada-com-as-altera%C3%A7%C3%B5es.pdf target=_blank>
+                                    resolução 43 do CONSUPER/2013
+                                  </a>).
+                                  Isso significa que é preciso participar em pelo menos uma atividade de cada modalidade.
+                                  <a href=#atividades-complementares>Leia mais informações sobre atividades complementares</a>.
+                                  Comprovante: gerar o histórico no SIGAA.
+                                </li>
+                                <li>
+                                  Defesa do TCC: o aluno deve ter defendido o TCC com sucesso e entregue o documento final na biblioteca
+                                  até a data da colação de grau.
+                                  Comprovantes: i) formulário de declaração de entrega do TCC, e: ii) anuência do orientador (pode ser um email ou declaração).
+                                </li>
+                                <li>
+                                  Manifestação: o aluno deve manifestar sua intenção em se formar,
+                                  enviando um email ao coordenador do curso (tads@blumenau.ifc.edu.br). Essa manifestação deve ser feita com no mínimo 40 dias de antecedência da data da colação de grau, para que o coordenador possa enviar as informações à secretaria (veja o artigo 10 da <a href=http://blumenau.ifc.edu.br/secretaria/wp-content/uploads/sites/21/2016/06/RESOLU%C3%87%C3%83O-095-2013-Aprova-Normatiza%C3%A7%C3%A3o-Formaturas.pdf target=_blank>resolução 095/2013 do CONSUPER</a>).
+                                  Não é necessário comprovar essa atividade, pois a lista de alunos fica disponível no endereço deste presente site, sendo periodicamente atualizada.
+                                </li>
+                                <li>
+                                  Secretaria: o aluno deve fazer o <a href=08-formulario-solicitacao-colar-grau-diploma-graduacao.pdf target=_blank>pedido de colação de grau</a>, a ser entregue na secretaria.
+                                </li>
+
+                              </ol>
+
+                              Verifique o <a href=01-checklist-aluno-colar-grau-TADS.pdf target=_blank><i>checklist</i></a>
+                              que contém um resumo dos requisitos mencionados.
+                            </dd>
+                          </dl>
+
+-->
+
+        <!--
+                          <dl class="com-bordas" id="proxima-colacao-grau">
+                            <dt>
+                              Quais alunos deverão se formar na próxima colação de grau?
+                              Atualizado em 11/12/2017. <s>24/11/2017 21/11/2017 11/08/2017 03/08/2017 09/06/2017</s>
+                            </dt>
+                            <dd>
+                              Em 2018 não haverá colação de grau em gabinete devido à prova do ENADE.
+                              A próxima colação de grau deverá ocorrer no início de 2018 (março ou abril).
+                              Os alunos que se manifestaram para colar grau em 2017 estão automaticamente transferidos
+                              para a colação de 2018.
+
+                              A tabela abaixo lista os nomes dos alunos que manifestaram até o momento a intenção em se
+                               formar (enviaram email para o tads@blumenau.ifc.edu.br) na próxima colação de grau.
+
+                              <!-- que deverá ocorrer em novembro de 2017, em uma cerimônia de gabinete. -->
+        <table>
+          <thead>
+            <tr>
+              <th>Aluno</th>
+              <th>Quando confirmou a intenção de se formar?</th>
+              <th>Situação</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            -->
+
+            <!--
+                                  <tr>
+                                    <td>MATHEUS AVI</td>
+                                    <td>03/08/2017</td>
+                                    <td></td>
+                                  </tr>
+-->
+
+            <!--
+                                  <tr>
+                                    <td>MARCO ANTONIO ROSSI JUNIOR</td>
+                                    <td>03/08/2017</td>
+                                    <td></td>
+                                  </tr>
+
+                                  <tr>
+                                    <td>PEDRO HENRIQUE RODRIGUES SOARES</td>
+                                    <td>04/08/2017</td>
+                                    <td></td>
+                                  </tr>
+
+                                  <tr>
+                                    <td>MOACIR ZIMERMANN JUNIOR</td>
+                                    <td>10/08/2017</td>
+                                    <td></td>
+                                  </tr>
+
+                                </tbody>
+                              </table>
+
+-->
+
+            <!-- A cerimônia de colação de grau deve se realizar no período entre
+                              60 a 180 dias após o término do primeiro semestre de 2017 (conforme
+                              artigo 8 da <a href=http://blumenau.ifc.edu.br/secretaria/wp-content/uploads/sites/21/2016/06/RESOLU%C3%87%C3%83O-095-2013-Aprova-Normatiza%C3%A7%C3%A3o-Formaturas.pdf target=_blank>resolução
+                              095/2013 do CONSUPER</a>); no caso, entre 30 de Setembro e 30 de Janeiro de 2018.
+                              A <a href=#colar-grau>documentação necessária</a> deve ser entregue pelo aluno
+                              com pelo menos 45 dias de antecedência.
+                              Para 2017/2, a data da colação de grau ainda está sendo definida.
+                            -->
+
+            <!-- A colação de grau a seguir deverá ocorrer em abril de 2018. -->
+
+            <!--
+                          </dd>
+                        </dl>
+-->
+
+            <dl class="com-bordas" id="colar-grau-2017-1">
+              <dt>
+                É obrigatório participar da cerimônia de colação de grau para obter o diploma?
+                <i>Atualizado em 09/06/2017. </i>
+              </dt>
+              <dd>
+                Não, conforme o artigo 5, parágrafo 2, da <a
+                  href=http://blumenau.ifc.edu.br/secretaria/wp-content/uploads/sites/21/2016/06/RESOLU%C3%87%C3%83O-095-2013-Aprova-Normatiza%C3%A7%C3%A3o-Formaturas.pdf
+                  target=_blank>resolução 095/2013 do CONSUPER</a>: "Os estudantes que não participarem da Sessão
+                Solene, poderão requerer seu certificado posteriormente junto a Secretaria Acadêmica/escolar.".
+              </dd>
+            </dl>
+
+            <dl class="com-bordas" id="regras-laboratorio-informatica">
+              <dt>
+                É permitido alimentar-se no laboratório de informática?
+                <i>Atualizado em 12/06/2017. </i>
+              </dt>
+              <dd>
+                Não, conforme o artigo 7, parágrafo 8, do <a
+                  href=03-Regimento-uso-dos-Laboratorios-enviado-pela-DDE-Junho-2017.pdf target=_blank>regimento de uso
+                  dos laboratórios</a>.
+              </dd>
+            </dl>
+
+            <!--
+                        <dl class="com-bordas" id="validar-ACC-com-trabalho">
+                          <dt>
+                            Eu trabalho na área de informática.
+                            Posso validar horas de atividades autônomas (complementares) a partir do meu trabalho?
+                            <i>Atualizado em 19/07/2017.</i>
+                          </dt>
+                          <dd>
+                            Sim.
+                            Historicamente, as atividades complementares têm sido validadas da seguinte maneira:
+                            <table>
+                              <th>
+                                <tr>
+                                  <td>Atividade</td>
+                                  <td>Comprovante</td>
+                                </tr>
+                              </th>
+                              <tbody>
+                                <tr>
+                                  <td>ESTÁGIO NÃO-OBRIGATÓRIO NA ÁREA DO CURSO, FORMALIZADO PELO IF CATARINENSE</td>
+                                  <td>Contrato de estágio</td>
+                                </tr>
+                                <tr>
+                                  <td>EXERCÍCIO PROFISSIONAL COM VÍNCULO EMPREGATÍCIO, DESDE QUE NA ÁREA DO CURSO</td>
+                                  <td>Carteira de trabalho</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            Envie o comprovante escaneado no momento da criação da solicitação de atividade autônoma.
+                            O período de estágio não-obrigatório NÃO PODE coincidir com o período de estágio obrigatório
+                            (a violação dessa regra implica em infração, conforme artigo 21, parágrafo XXII, do <a href=http://consuper.ifc.edu.br/wp-content/uploads/sites/14/2017/01/Resolu%C3%A7%C3%A3o-05-2017-Aprova-Regulamento-da-conduta-discente.pdf target=_blank>regulamento de conduta discente</a>).
+                            Leia mais detalhes sobre o estágio não-obrigatório nos artigos 10 a 15 do <a href=http://blumenau.ifc.edu.br/wp-content/uploads/2016/03/Regulamento-Estagio-Supervisionado-TADS1.pdf target=_blank>regulamento de estágio do TADS</a>.
+                          </dd>
+                        </dl>
+
+-->
+            <dl class="com-bordas" id="matricula">
+              <dt>
+                Existem orientações sobre como fazer a matrícula para 2017/2? <i>Atualizado em 12/07/2017.</i>
+              </dt>
+              <dd>
+
+                Sim!
+                Verifique a sequência de passos para fazer a
+                <a href=05-renovar-matricula-2017.pdf target=_blank>renovação da matrícula</a>,
+                bem como a <a href=04-inclusao-exclusao-disciplinas-2017.png target=_blank>inclusão ou a remoção de
+                  disciplinas</a>.
+              </dd>
+            </dl>
+
+            <dl class="com-bordas" id="cursos">
+              <dt>
+                Posso fazer cursos por minha conta e obter vantagens? <i>Atualizado em 12/07/2017.</i>
+              </dt>
+              <dd>
+                Sim! Aprendendo o conteúdo por conta própria você pode acelerar o crédito em disciplinas mediante <a
+                  href=#proficiencia>prova de proficiência<a>,
+                    ou mesmo contabilizar horas de <a href=#atividades-complementares>atividades complementares</a>,
+                    caso o curso seja certificado.
+                    Segue uma lista de locais (a ser extendida em breve) nos quais você pode verificar a possibilidade
+                    de realizar cursos:
+                    <ol>
+                      <li><a
+                          href=https://olhardigital.com.br/pro/noticia/25-cursos-gratuitos-de-tecnologia-da-informacao/68684
+                          target=_blank>Notícia sobre cursos gratuitos</a> (indicação: professor Vital)</li>
+                    </ol>
+              </dd>
+            </dl>
+
+
+
+            <dl class="com-bordas" id="tempo-limite">
+              <dt>
+                Qual é o prazo máximo no qual eu posso ficar cursando o TADS?<i>Atualizado em 09/08/2017.</i>
+              </dt>
+              <dd>
+                O tempo máximo coerente para que um curso seja concluído é o dobro da duração normal do curso.
+                No caso do TADS, como o curso dura três (3) anos, esse prazo máximo seria igual a seis (6) anos.
+                Entretanto, esse prazo ainda não está vigente nos PPC's do TADS:
+                <a href=http://blumenau.ifc.edu.br/tads/wp-content/uploads/sites/8/2015/11/PPC.TADS_.pdf
+                  target=_blank>PPC 2014</a> (válido para alunos matriculados até 2016) e
+                <a href=http://blumenau.ifc.edu.br/tads/wp-content/uploads/sites/8/2015/11/PPC-TADS-2017-vers%C3%A3o-final.pdf
+                  target=_blank>PPC
+                  2017</a> (válido para alunos matriculados a partir de 2017).
+                Portanto, não há que se estipular, até o momento, ações de jubilamento de aluno por motivo de estouro de
+                tempo de curso.
+                Porém, é relevante mencionar que o aluno pode trancar o curso em até no máximo quatro (4) vezes (segundo
+                artigo 45, parágrafo I da <a
+                  href=http://ifc.edu.br/wp-content/uploads/2014/05/RESOLUCAO-057-2012-org-didatica-SUP.pdf
+                  target=_blank>organização didática dos cursos superiores</a>).
+              </dd>
+            </dl>
+
+            <dl class="com-bordas" id="sala-de-aula">
+              <dt>
+                Qual é a sala de aula usada pelo TADS? <i>Atualizado em 17/08/2017.</i>
+              </dt>
+              <dd>
+                A alocação de salas é feita pelo CAE e pelo CGE.
+                O mapa de salas está exposto no CAE.
+                Em 2017/2, a sala C17 será utilizada na disciplina de probabilidade e estatística.
+                Confira a alocação de salas e laboratórios no <a
+                  href=https://docs.google.com/spreadsheets/d/1b9ApO0CNPU7EEvd0AG2zMKiPvLXsfjCbgar8EVf5H1Q/edit?ts=59484104#gid=0
+                  target=_blank>cronograma de aulas do TADS</a>,
+                na guia nomeada como "Saldos".
+              </dd>
+            </dl>
+
+            <dl class="com-bordas" id="poscomp">
+              <dt>
+                O que é o POSCOMP?
+                <i>Atualizado em 06/09/2017.</i>
+              </dt>
+              <dd>
+                É um exame nacional (brasileiro) que contempla questões da área de computação.
+                O resultado obtido nesse exame é solicitado em diversos programas de pós-graduação.
+                O aluno não precisa esperar se formar para realizar essa prova.
+                Pode-se realizar a prova a fim de praticar a execução da mesma.
+                Em geral, os programas de pós-graduação exigem que o aluno obtenha uma nota acima da média.
+                Apesar de ser uma prova de muitas questões, a média não costuma ser alta.
+                Veja esta <a href=https://www.facebook.com/40poscomp/posts/306444282891664 target=_blank>postagem no
+                  facebook com as médias dos anos anteriores</a>.
+                Confira mais informações no <a href=http://www.sbc.org.br/educacao/poscomp target=_blank>site do
+                  POSCOMP</a>.
+              </dd>
+            </dl>
+
+            <dl class="com-bordas" id="mestrado">
+              <dt>
+                Após concluir o TADS, posso cursar um mestrado? <i>Atualizado em 04/10/2017. <s>06/09/2017</s></i>
+              </dt>
+              <dd>
+                Sim!
+                Os mestrados em computação no Brasil geralmente utilizam a nota do <a href=#poscomp>POSCOMP</a> como
+                parâmetro no processo seletivo.
+                Após concluir o curso do TADS, seguem algumas opções disponíveis na região próxima a Blumenau nas quais
+                o aluno pode realizar um processo seletivo a fim de cursar o mestrado:
+                <ul>
+                  <li>UFSC/Florianópolis/<a href=http://ine.ufsc.br/pos-graduacao/ target=_blank>Departamento de
+                      Informática e Estatística (INE)</a></li>
+                  <li>UFSC/Florianópolis/<a href=http://pgeas.ufsc.br/ target=_blank>Departamento de Engenharia de
+                      Automação e Sistemas (DAS)</a></li>
+                  <li>UFSC/Florianópolis/<a href=http://www.egc.ufsc.br/ target=_blank>Departamento de Engenharia do
+                      Conhecimento (EGC)</a></li>
+                </ul>
+                É possível também realizar o mestrado/doutorado em outro país.
+                Naturalmente, a habilidade no idioma inglês é necessária para aumentar a chance de concretizar tal
+                possibilidade.
+                Seguem algumas informações sobre as possibilidades de estudo em outros países:
+                <ul>
+                  <li><a href=https://www.inf.ufes.br/~vitorsouza/academia/faq-sobre-doutorado-em-trento/
+                      target=_blank>https://www.inf.ufes.br/~vitorsouza/academia/faq-sobre-doutorado-em-trento/</a></li>
+                </ul>
+                <br />
+                Consulte <a
+                  href=https://github.com/hvescovi/hvescovi.github.io/tree/master/09-chamadas-mestrado-doutorado
+                  target=_blank>NESTE ENDEREÇO</a> chamadas de mestrado (e doutorado) nas quais possivelmente egressos
+                do TADS podem se candidatar.
+                As chamadas são atualizadas periodicamente.
+              </dd>
+            </dl>
+
+
+            <!--
+                            <dl class="com-bordas" id="apos-defesa-tcc">
+                              <dt>
+                                O que devo fazer após defender o meu TCC? <i>Atualizado em 11/09/2017.</i>
+                              </dt>
+                              <dd>
+                                Você deve:
+                                <ul>
+                                  <li>Implementar a correções solicitadas pela banca.</li>
+                                  <li>Após ter a anuência (aprovação) do orientador, entregar a versão final do seu documento na biblioteca. Veja o <a href=02-Comprovacao-Entrega-TCC.odt>comprovante de entrega do TCC</a> (<a href=08-documentos-TCC/05-termo-entrega-TCC-biblioteca.pdf>PDF</a>).
+                                    Deve ser entregue um CD contendo o seu trabalho em versão PDF e programas/código eventualmente produzidos.
+                                    Não é preciso entregar a versão impressa do TCC.</li>
+                                  <li>Você deve entregar o <a href=08-documentos-TCC/04-termo-autoriza-publicacao-tcc-na-biblioteca.doc>termo de liberação de uso</a> do seu TCC.</li>
+                                </ul>
+
+                              </dd>
+                            </dl>
+-->
+            <dl class="com-bordas" id="estagio-nao-obrigatorio">
+              <dt>
+                Eu sou aluno em períodos iniciais do TADS e gostaria de fazer um estágio.
+                Como devo proceder? <i>Atualizado em 14/09/2017</i>
+              </dt>
+              <dd>
+                Alunos em períodos iniciais do TADS geralmente não integralizaram 60% da carga horária em aprovações nas
+                disciplinas (exceto em casos de aproveitamento de estudos).
+                Nesse caso, o aluno está apto a realizar um estágio NÃO-OBRIGATÓRIO.
+                <!-- Consulte a <a href=http://ifc.edu.br/extensaoestagio/coordenacao-de-estagios-e-convenios/estagios/ target=_blank>documentação necessária</a> para formalizar o seu estágio não-obrigatório. -->
+                Para esse tipo de estágio é necessário preencher pelo menos dois documentos:
+                <ul>
+                  <li>
+                    O <a
+                      href=http://blumenau.ifc.edu.br/wp-content/uploads/2016/03/Modelo-de-Termo-de-Compromisso-Est%C3%A1gio-N%C3%A3o-Obrigat%C3%B3rio-revisado-2-edit%C3%A1vel-2.doc
+                      target=_blank>Termo de Compromisso Estágio Não Obrigatório</a>.
+                  </li>
+                  <li>
+                    O formulário de <a
+                      href=http://blumenau.ifc.edu.br/wp-content/uploads/2016/03/01.Solicitacao-de-pedido-de-Conv%C3%AAnio-pelos-C%C3%A2mpus.doc
+                      target=_blank>Solicitação de pedido de Convênio entre empresa/instituição e o IFC</a>.
+                  </li>
+                </ul>
+                Esses documentos devem ser entregues no <a href=http://blumenau.ifc.edu.br/contato/ target=_blank>setor
+                  de estágios e convênios</a>.
+                Esses formulário estão disponíveis na <a href=http://blumenau.ifc.edu.br/documentos-do-estagio/
+                  target=_blank>página de documentos do setor de Extensão, Estágios e Convênios</a>.
+              </dd>
+            </dl>
+
+            <dl class="com-bordas" id="eventos">
+              <dt>
+                Em quais eventos um aluno do TADS pode participar?<i>Atualizado em 04/10/2017.</i>
+              </dt>
+              <dd>
+                Alunos do TADS podem participar de eventos para assistir palestras e cursos.
+                Podem também escrever artigos e enviar para os eventos, a fim de apresentar esses artigos.
+                Confira <a href=https://github.com/hvescovi/hvescovi.github.io/tree/master/11-eventos
+                  target=_blank>NESTE ENDEREÇO</a> uma lista de eventos que é atualizada periodicamente.
+
+              </dd>
+            </dl>
+
+            <dl class="com-bordas" id="atestado">
+              <dt>
+                Estou em situação de atestado por período superior a 15 dias. Como devo proceder? <i>Atualizado em
+                  23/10/2017.</i>
+              </dt>
+              <dd>
+                O afastamento por período superior a 15 dias dá ao aluno direito ao regime especial de exercício
+                domiciliar.
+                Leia como fazer o pedido no artigo 9 da <a
+                  href=http://blumenau.ifc.edu.br/secretaria/wp-content/uploads/sites/21/2016/06/regulamento-regime-especial-de-exercicio-domiciliar3.pdf
+                  target=_blank>regulamentação do exercício domiciliar</a>.
+              </dd>
+            </dl>
+
+            <dl class="com-bordas" id="carteirinha">
+              <dt>
+                Aluno do TADS pode ter carteirinha de estudante? <i>Atualizado em 23/10/2017.</i>
+              </dt>
+              <dd>
+                Em princípio sim.
+                Verifique no <a
+                  href=http://www.une.org.br/noticias/faca-o-documento-do-estudante-2017-e-garanta-o-direito-a-meia-entrada/
+                  target=blank>site da UNE</a> a possibilidade de obter uma carteirinha de estudante de abrangência
+                nacional.
+                O custo estimado é de R$30,00, mais o frete.
+              </dd>
+            </dl>
+
+            <dl class="com-bordas" id="enem">
+              <dt>
+                Qual é a nota mínima do ENEM para ingresso no TADS?<i>Atualizado em 27/10/2017.</i>
+              </dt>
+              <dd>
+                Não há nota de corte (nota mínima) do ENEM para ingresso no TADS.
+              </dd>
+            </dl>
+
+            <dl class="com-bordas" id="eventos-noturnos">
+              <dt>
+                Haverá aulas em noites nas quais ocorrem eventos (como festa Julina e noite de Halloween)?
+                <i>Atualizado em 01/11/2017.</i>
+              </dt>
+              <dd>
+                Salvo expressa manifestação do professor responsável pela disciplina, sim. Se o evento em questão
+                influenciar no bom andamento da aula, ou houver uma situação de interesse, por parte dos alunos, com
+                concordância do professor, é possível, por exemplo, que o professor realize a chamada e apresente uma
+                atividade dirigida, flexibilizando o momento de aula de acordo com o bom senso e o contexto. De qualquer
+                maneira, o professor tem total autonomia para lidar com o cenário conforme julgar melhor.
+              </dd>
+            </dl>
+
+            <dl class="com-bordas" id="defesa-tcc-2017-2">
+              <dt>
+                Quais os alunos que deverão apresentar o TCC em 2017/2? <i>Atualizado em 14/11/2017</i>.
+              </dt>
+              <dd>
+                A tabela abaixo lista os nomes dos alunos que manifestaram até o momento a intenção em defender o TCC
+                (enviaram email para o tads@blumenau.ifc.edu.br, com cópia para o respectivo professor orientador) e a
+                respectiva situação.
+                <table>
+                  <th>
+                    <tr>
+                      <td>Aluno</td>
+                      <td>Quando confirmou a intenção de defender o TCC?</td>
+                      <td>Orientador</td>
+                      <td>Situação</td>
+                    </tr>
+                  </th>
+
+                  <tbody>
+
+                    <!--
+                                    <tr>
+                                      <td>MOACIR ZIMERMANN JUNIOR</td>
+                                      <td>21/05/2017</td>
+                                      <td>Adriano Pessini</td>
+                                      <td>Defesa confirmada para o dia 05/07/2017, das 19hs às 20hs, na sala D-04.
+                                        Título do projeto: ESTACIONE - Sistema para Estacionamentos Rotativos.</td>
+                                      </tr>
+-->
+
+                  </tbody>
+                </table>
+              </dd>
+            </dl>
+
+            <dl class="com-bordas" id="optativas-2018-1">
+              <dt>
+                Quais as disciplinas optativas que serão ofertadas em 2018/1? <i>Atualizado em 14/11/2017</i>.
+              </dt>
+              <dd>
+                Duas disciplinas serão ofertadas em 2018/1:
+                <ul>
+                  <li>Segurança computacional, professor Ricardo Ladeira. Ementa: Introdução à Segurança da Informação.
+                    Golpes e ataques na internet. Políticas de senhas. Criptografia. Tecnologias de apoio à segurança.
+                    Aspectos de computação forense.
+                  </li>
+                  <li>Fundamentos para o desenvolvimento de jogos em 2D, professor Adriano Pessini.
+                    Ementa: Conceitos, história e gêneros dos jogos. Mercado de jogos digitais. Game design.
+                    Inicialização, estados e game looping. Texturas e sprites. Janelas e menus. Movimentação,
+                    aceleração, velocidade e colisões Animações. Música e efeitos sonoros. Controle de estados do jogo.
+                    Câmera. Prática de desenvolvimento de jogos.
+                  </li>
+                </ul>
+
+              </dd>
+            </dl>
+
+            <dl class="com-bordas" id="defesa-tcc-2018-1">
+              <dt>
+                Quais os alunos que deverão apresentar o TCC em 2018/1 (no dia 02 de março de 2018)?
+                <i>Atualizado em 24/11/2017. <s>16/11/2017</s></i>
+              </dt>
+              <dd>
+                A tabela abaixo lista os nomes dos alunos que manifestaram até o momento a intenção em defender o TCC
+                (enviaram email para o tads@blumenau.ifc.edu.br, com cópia para o respectivo professor orientador) e a
+                respectiva situação.
+                <table>
+                  <th>
+                    <tr>
+                      <td>Aluno</td>
+                      <td>Quando confirmou a intenção de defender o TCC?</td>
+                      <td>Orientador</td>
+                      <td>Situação</td>
+                    </tr>
+                  </th>
+
+                  <tbody>
+
+                    <tr>
+                      <td>MATHEUS AVI</td>
+                      <td>16/11/2017</td>
+                      <td>Ricardo de la Rocha Ladeira</td>
+                      <td></td>
+                      <!--
+                                      <td>Adriano Pessini</td>
+                                      <td>Defesa confirmada para o dia 05/07/2017, das 19hs às 20hs, na sala D-04.
+                                        Título do projeto: ESTACIONE - Sistema para Estacionamentos Rotativos.</td>
+                                      -->
+                    </tr>
+                    <tr>
+                      <td>ELAINE CAROLINE DOS SANTOS</td>
+                      <td>22/11/2017</td>
+                      <td>Aldelir Fernando Luiz</td>
+                      <td></td>
+                      <!--
+                                      <td>Adriano Pessini</td>
+                                      <td>Defesa confirmada para o dia 05/07/2017, das 19hs às 20hs, na sala D-04.
+                                        Título do projeto: ESTACIONE - Sistema para Estacionamentos Rotativos.</td>
+                                      -->
+                    </tr>
+                    <tr>
+                      <td>MATEUS MORAES BUENO</td>
+                      <td>26/11/2017</td>
+                      <td>Paulo César Rodacki Gomes</td>
+                      <td></td>
+                      <!--
+                                      <td>Adriano Pessini</td>
+                                      <td>Defesa confirmada para o dia 05/07/2017, das 19hs às 20hs, na sala D-04.
+                                        Título do projeto: ESTACIONE - Sistema para Estacionamentos Rotativos.</td>
+                                      -->
+                    </tr>
+
+
+                  </tbody>
+                </table>
+              </dd>
+            </dl>
+
+            <dl class="com-bordas" id="alocacao-disciplinas-2018-1">
+              <dt>
+                Qual a grade de alocação de horários das disciplinas de 2018/1? <i>Atualizado em 20/11/2017</i>.
+              </dt>
+              <dd>
+                Disponível <a
+                  href=https://github.com/hvescovi/hvescovi.github.io/blob/master/12-diversos/01-disciplinas-tads-2018-1-v1.pdf
+                  target=_blank>neste link</a>.
+              </dd>
+            </dl>
+            <!--
+
+                            <dl class="com-bordas" id="prazo-entrega-diploma">
+                              <dt>
+                                Após realizar a colação de grau, em quanto tempo receberei o diploma? <i>Atualizado em 21/11/2017</i>.
+                              </dt>
+                              <dd>
+                                O prazo de confecção e disponibilização do diploma é de 90 dias.
+                            </dd>
+                            </dl>
+-->
+            <dl class="com-bordas" id="enade">
+              <dt>
+                Eu preciso fazer a prova do ENADE? <i>Atualizado em 29/11/2017</i>.
+              </dt>
+              <dd>
+                O ENADE é uma prova nacional que avalia cursos superiores.
+                Todo curso é avaliado aproximadamente a cada 3 anos.
+                O curso de tecnólogo em análise e desenvolvimento de sistemas foi avalido nos anos de 2008, 2011, 2014 e
+                2017 (<a href=http://inep.gov.br/provas-e-gabaritos3 target=_blank>confira aqui</a>).
+                No ano em que o curso é avaliado, os alunos são inscritos pelo coordenador do curso e notificados sobre
+                a prova que irá ocorrer.
+                São inscritos alunos ingressantes (que cumpriram até 25% do curso) e alunos concluintes (que cumpriram
+                mais de 75% do curso).
+                Nos últimos anos os alunos ingressantes tem sido dispensados da prova.
+                O aluno é responsável por acessar o sistema do ENADE, preencher o questionário de informações, obter
+                informações sobre local de prova, etc.
+                Uma cópia das provas anteriores está disponível <a
+                  href=https://github.com/hvescovi/hvescovi.github.io/tree/master/13-enade target=_blank>neste site</a>
+                para consulta.
+              </dd>
+            </dl>
+
+            <dl class="com-bordas" id="tccs">
+              <dt>
+                Como é um TCC do TADS <i>Atualizado em 29/11/2017</i>.
+              </dt>
+              <dd>
+                Consulte <a href=https://github.com/hvescovi/hvescovi.github.io/tree/master/14-tccs target=_blank>neste
+                  repositório</a> os TCCS defendidos por alunos do TADS.
+              </dd>
+            </dl>
+
+            <dl class="com-bordas" id="questionario-egresso">
+              <dt>
+                Estou cursando o último ano do TADS. Preciso responder o questionário de egressos? <i>Atualizado em
+                  30/11/2017</i>.
+              </dt>
+              <dd>
+                O aluno que cursa as disciplinas finais do TADS (mas ainda está na situação de "aluno", percorrendo o
+                curso)
+                está convidado a responder o questionário, conforme estabelecido no artigo 17 da <a
+                  href=http://ifc.edu.br/wp-content/uploads/2016/02/RESOLU%C3%87%C3%83O-059-2016-Politica-de-Acompanhamento-de-egressos-PAEG.pdf
+                  target=_blank>resolução 059 do CONSUPER (2016)</a>.
+                Nesse caso, o formando vai ter responder as perguntas em relação ao curso que está cursando atualmente,
+                mas descreve (na questão 10 do questionário) o ano/período no qual pretende concluir o curso (exemplo:
+                2017/2).
+                <br>
+                Por fim, o aluno está convidado a responder novamente o questionário quando for realmente egresso.
+
+              </dd>
+            </dl>
+
+            <dl class="com-bordas" id="destrancar">
+              <dt>
+                Estou trancado no curso. Como voltar a estudar? <i>Atualizado em 05/01/2018</i>.
+              </dt>
+              <dd>
+                Basta efetuar a matrícula no próximo período reservado para tal fim.
+                Em 2018/1, o período de matrícula inicia-se em 29 de janeiro, <a
+                  href=https://github.com/hvescovi/hvescovi.github.io/blob/master/12-diversos/02-calendario-superior-2018.pdf
+                  target=_blank>conforme calendário</a>.
+              </dd>
+            </dl>
+
+
+
+
+
+
+
+
+            <hr>
+
+
+
+            <h2>Perguntas & Respostas sobre o TADS - atividades administrativas de coordenação</h2>
+
+
+            <dl class="com-bordas" id="vagas-transferencia">
+              <dt>
+                A PROEN está solicitando o número de vagas a serem publicadas em edital de transferência
+                interna, externa e para retorno de graduado.
+                Como o coordenador do curso participa nesse processo?
+                <i>Atualizado em 10/05/2017. </i>
+              </dt>
+              <dd>
+                A secretaria solicita ao pesquisador institucional informações sobre o número de matrículas, por ano, no
+                curso.
+                Esses números advém do SISTEC.
+                Por exemplo, considere a tabela abaixo:
+                <table>
+                  <tr>
+                    <td>Ano</td>
+                    <td>Vagas SISTEC</td>
+                    <td>Alunos regulares 2017/1</td>
+                    <td>Semestre/fase 2017/2</td>
+                  </tr>
+                  <td>2016</td>
+                  <td>43</td>
+                  <td>32</td>
+                  <td>quarto</td>
+                  </tr>
+                  <tr>
+                    <td>2017</td>
+                    <td>35</td>
+                    <td>32</td>
+                    <td>segundo</td>
+                  </tr>
+                </table>
+                De acordo com a tabela, há 43 alunos com matrícula de 2016 registrados.
+                Essa informação considera o presente momento: 2017/1.
+                Porém, efetivamente, apenas 32 alunos estão regularmente matriculados.
+                A diferença (8) deve-se a alunos que estão trancados, devido a motivos diversos.
+                O PPC do TADS menciona 35 vagas disponíveis para ingressos.
+                Portanto, pode-se abrir 3 vagas (35-32) no edital de transferência.
+                Alunos ingressantes nessa vagas possivelmente serão alocados no quarto semestre, em 2017/2.
+                Para alunos de 2017, todas as vagas estão ocupadas, não sendo possível ofertar vagas relativas à turma
+                do segundo semestre de 2017/2.
+                Turmas de sexto semestre (com alunos de matrícula 2015) não são considerados para edital de
+                transferência,
+                pois alunos não são transferidos para o último semestre do curso.
+                No exemplo apresentado, o coordenador de curso define a quantidade de vagas a serem abertas, dentro do
+                limite máximo possível.
+                No exemplo, até 3 vagas podem ser abertas.
+              </dd>
+            </dl>
+
+            <dl class="com-bordas" id="vagas-transferencia">
+              <dt>
+                No SIGAA, como fazer para lançar uma aula extra e cancelar uma aula que não foi realizada?
+                <i>Atualizado em 09/06/2017. </a>
+              </dt>
+              <dd>
+                A resposta está neste link:
+                <a href=https://suporte.ifc.edu.br/suporte/front/knowbaseitem.form.php?id=21
+                  target=_blank>https://suporte.ifc.edu.br/suporte/front/knowbaseitem.form.php?id=21</a>.
+              </dd>
+            </dl>
+
+            Para ver versões antigas desse documento, vá ao <a href=https://github.com/hvescovi/hvescovi.github.io
+              target=_blank>repositório do github correspondente</a>.
+      </article>
+    </div>
+
+  </section>
+
+  <section class="container">
+    <div class="myfooter">
+      <article>
+        hylson.com, 2007-2017.
+        <article>
+    </div>
+  </section>
+
+</body>
+
+</html>
