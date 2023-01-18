@@ -1,29 +1,9 @@
-.mydiv {
-  display: flex;
-//  flex-direction: column;
-//justify-content: center;
-}
-
 .container {
   display: flex;
 }
 
-.portuguese {
-//  background-color: #ff9e2c;
-  background-color: lightcyan;
-  flex: 1;
-  padding: 1rem;
-}
-
-.english {
-//  background-color: #b6701e;
-  background-color: lightyellow;
-  flex: 1;
-  padding: 1rem;
-}
-
 .bilingual {
-//  background-color: #e27c2e;
+  background-color: #e27c2e;
   background-color: lightcyan;
   flex: 1;
   padding: 1rem;
@@ -60,9 +40,10 @@ dl.com-bordas {
 		}
 
 	.com-bordas dt {
-		background-color: #131210;
+		/*background-color: #131210;*/
+    background-color: #6cce6a;
 		/* color: #959289; */
-		color: white;
+		/*color: white;*/
 		padding: .5em .5em;
 		font-weight: bold;
 		/* text-align: center; */
@@ -118,5 +99,9 @@ table, td {
 }
 
 #busca {
+  font-size: 44px;
+}
+
+#texto-busca {
   font-size: 44px;
 }
