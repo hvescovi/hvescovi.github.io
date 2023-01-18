@@ -77,7 +77,7 @@ table, td {
 }
 
 .destaca {
-  background-color: lightgreen;
+  background-color: rgb(132, 200, 237);
   font-weight: bold;
   border: 1px solid blue;
 }
