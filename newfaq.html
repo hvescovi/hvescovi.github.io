@@ -1699,9 +1699,9 @@
   <script>
     $(document).ready(function () {
 
-      var currentLocation = window.location;
+      var href = document.location.pathname;
       // se não incluiu item específico no link
-      if (!(currentLocation.includes("#"))) {
+      if (!(href.includes("#"))) {
         // joga o foco para a caixa de busca, para procurar :-)
         $("#busca").focus();
       }
