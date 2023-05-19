@@ -24,7 +24,7 @@
             <input type=hidden id=anterior value="" />
           </div>
           <hr />
-          Observe apenas as alterações mensais ou 
+          Observe apenas as alterações mensais ou
           <a href=# class=todas>visualize todas as notícias</a> <br>
 
           2023:
@@ -48,14 +48,14 @@
           | <a href=# class=news id="07/2017">07</a>
           | <a href=# class=news id="06/2017">06</a>
           | <a href=# class=news id="05/2017">05</a>
-          
+
 
           <hr>
           <a href="https://docs.google.com/document/d/1zPJfGPOL9lbsNWRc4Cso4t2xc0s7PUsjeDNcPm521zI/edit">
-            Versão anterior das orientações</a> - ainda válida (em migração) | 
+            Versão anterior das orientações</a> - ainda válida (em migração) |
           <a href="http://blumenau.ifc.edu.br">IFC Blumenau</a> |
-          <a href=http://www.hylson.com/netto>hylson.com</a> 
-          
+          <a href=http://www.hylson.com/netto>hylson.com</a>
+
 
           <hr>
 
@@ -101,26 +101,33 @@
 
           <dl class="com-bordas" id="aulas-bcc-funcionamento">
             <dt>
-              <a href="#aulas-bcc-funcionamento-link" id="aulas-bcc-funcionamento-link"><img src="images/minilink.png" /></a>
+              <a href="#aulas-bcc-funcionamento-link" id="aulas-bcc-funcionamento-link"><img
+                  src="images/minilink.png" /></a>
               Em relação ao horário de funcionamento (turno), como funcionam as aulas do BCC no IFC Campus Blumenau?
               08/05/2023.
             </dt>
             <dd>
               <p>
-              Para alunos ingressantes a partir de 2023, as aulas ocorrerão nos turnos vespertino e noturno.
-              Há um planejamento para que nos 2 primeiros anos (4 primeiras fases) as aulas ocorram majoritariamente à
-              tarde,
-              enquanto nos 2 últimos anos (4 últimas fases) as aulas ocorram majoritariamente à noite.
-              Para alunos ingressantes antes de 2023, o projeto inicial contemplava o primeiro ano (2 fases) pela manhã,
-              o segundo ano à tarde e os 2 últimos anos à noite.
-              Em 2023, portanto, não ocorrerão mais aulas do BCC pela manhã.
+                Para alunos ingressantes a partir de 2023, as aulas ocorrerão nos turnos vespertino e noturno.
+                Há um planejamento para que nos 2 primeiros anos (4 primeiras fases) as aulas ocorram majoritariamente à
+                tarde,
+                enquanto nos 2 últimos anos (4 últimas fases) as aulas ocorram majoritariamente à noite.
+                Para alunos ingressantes antes de 2023, o projeto inicial contemplava o primeiro ano (2 fases) pela
+                manhã,
+                o segundo ano à tarde e os 2 últimos anos à noite.
+                Em 2023, portanto, não ocorrerão mais aulas do BCC pela manhã.
               </p>
               <p>
-                Neste ano de 2023 não está sendo possível priorizar os turnos de aula (2 anos à tarde e 2 anos à noite) por causa da complexidade de gerar grade de horário atendendo a requisitos de aulas (por exemplo, se o docente dá aula pela manhã no médio não é favorável que o docente ministre aula à noite no superior). Esse aspecto dificulta a realização de estágios que possuem restrição firme de horário, pois as aulas podem ocorrer durante a tarde ou a noite.
+                Neste ano de 2023 não está sendo possível priorizar os turnos de aula (2 anos à tarde e 2 anos à noite)
+                por causa da complexidade de gerar grade de horário atendendo a requisitos de aulas (por exemplo, se o
+                docente dá aula pela manhã no médio não é favorável que o docente ministre aula à noite no superior).
+                Esse aspecto dificulta a realização de estágios que possuem restrição firme de horário, pois as aulas
+                podem ocorrer durante a tarde ou a noite.
               </p>
 
               <p>
-              Alunos de primeira fase não podem solicitar reajuste de matrícula: são matriculados compulsoriamente em todas as disciplinas.
+                Alunos de primeira fase não podem solicitar reajuste de matrícula: são matriculados compulsoriamente em
+                todas as disciplinas.
               </p>
             </dd>
           </dl>
@@ -134,12 +141,13 @@
             </dt>
             <dd>
               Essas disciplinas serão reofertadas novamente em momento futuro, possivelmente como optativas.
-              Será feito também um mapeamento entre disciplinas que possam ser realizadas nos 
-              outros cursos do IFC Campus Blumenau (Engenharia Elétrica e Pedagogia), aproveitando-as para "validar" disciplinas do BCC.
+              Será feito também um mapeamento entre disciplinas que possam ser realizadas nos
+              outros cursos do IFC Campus Blumenau (Engenharia Elétrica e Pedagogia), aproveitando-as para "validar"
+              disciplinas do BCC.
             </dd>
           </dl>
 
-          
+
 
 
           <dl class="com-bordas" id="matricula">
@@ -448,7 +456,7 @@
 
 
 
-          
+
 
 
 
@@ -1647,7 +1655,12 @@
   <script>
     $(document).ready(function () {
 
-      $("#busca").focus();
+      var currentLocation = window.location;
+      // se não incluiu item específico no link
+      if (!(currentLocation.includes("#"))) {
+        // joga o foco para a caixa de busca, para procurar :-)
+        $("#busca").focus();
+      }
 
 
       // duplica todos os DD's para ter o conteudo original antes da busca
@@ -1857,7 +1870,7 @@
 -->
 
 
-          <!--
+<!--
               <dl class="com-bordas" id="proficiencia">
                 <dt>Tenho conhecimentos sobre uma matéria que vai ser oferecida no próximo semestre.
                   Posso obter vantagem com isso?
