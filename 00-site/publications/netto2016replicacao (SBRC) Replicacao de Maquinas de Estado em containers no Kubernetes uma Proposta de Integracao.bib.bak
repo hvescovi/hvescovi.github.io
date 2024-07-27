@@ -1,0 +1,6 @@
+@InProceedings{netto2016replicacao,
+  Title                    = {Replicação de Máquinas de Estado em \textit{containers} no Kubernetes: uma Proposta de Integração},
+  Author                   = {Hylson Vescovi Netto and Lau Cheuk Lung and Miguel Correia and Aldelir Fernando Luiz},
+  Booktitle                = {Anais do Simpósio Brasileiro de Redes de Computadores e Sistemas Distribuidos},
+  Year                     = {2016},
+}

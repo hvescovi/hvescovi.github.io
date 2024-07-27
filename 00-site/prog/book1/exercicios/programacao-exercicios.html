@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title></title> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<meta name="generator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
+<!-- xhtml,charset=utf-8,html --> 
+<meta name="src" content="programacao-exercicios.tex" /> 
+<link rel="stylesheet" type="text/css" href="programacao-exercicios.css" /> 
+</head><body 
+>
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+<!--l. 1--><p class="indent" >
+                                                                                
+                                                                                
+</p>
+  <h2 class="chapterHead"><span class="titlemark">1</span>  <a 
+ id="x1-10001"></a>Exercícios de Programação/Hylson</h2>
+<!--l. 3--><p class="noindent" >February 25, 2020
+</p>
+  <h3 class="sectionHead"><span class="titlemark">1.1</span>  <a 
+ id="x1-20001.1"></a>Repositórios (git)</h3>
+<!--l. 8--><p class="noindent" >
+     </p><dl class="enumerate-enumitem"><dt class="enumerate-enumitem">
+   1. </dt><dd 
+class="enumerate-enumitem"><a 
+ id="x1-20011"></a> Após clonar um repositório e modificar seu conteúdo, qual é a sequência de ações
+     a serem realizadas para enviar as atualizações para o repositório remoto?
+     </dd><dt class="enumerate-enumitem">
+   2. </dt><dd 
+class="enumerate-enumitem"><a 
+ id="x1-20022"></a>  Suponha  que  foram  modificados  diversos  arquivos  no  repositório  local,  e
+     que  deseja-se  apenas  enviar  para  o  repositório  remoto  um  arquivo  chamado
+     “inicio.html”. Tal decisão deve-se ao fato de que se deseja definir uma mensagem
+     de confirmação especial para esse arquivo; as demais modificações poderão ser
+     realizadas com outra mensagem de confirmação das alterações. Forneça o comando
+     completo que informa que apenas o arquivo mencionado será incluído na lista de
+     alterações a ser enviada para o repositório remoto.
+     </dd><dt class="enumerate-enumitem">
+   3. </dt><dd 
+class="enumerate-enumitem">Suponha  que  você  está  alterando  arquivos  de  seu  repositório.  Forneça  uma
+     sequência de comandos para enviar as alterações para o repositório remoto.
+     </dd><dt class="enumerate-enumitem">
+   4. </dt><dd 
+class="enumerate-enumitem">Um aluno de informática geralmente manipula códigos no laboratório da instituição
+     de ensino e em sua casa. Dada uma rotina de trabalho, informe quais são as ações
+     e comandos que o aluno deve fazer quando:
+     <!--l. 96--><p class="indent" >
+          </p><dl class="enumerate-enumitem"><dt class="enumerate-enumitem">
+       a) </dt><dd 
+class="enumerate-enumitem">Programa no laboratório de informática.
+          </dd><dt class="enumerate-enumitem">
+       b) </dt><dd 
+class="enumerate-enumitem">Programa em casa.</dd></dl>
+     </dd><dt class="enumerate-enumitem">
+   5. </dt><dd 
+class="enumerate-enumitem">Ao operar o git em uma máquina compartilhada, é útil verificar como está a configuração
+     de usuário do git (nome e email). Forneça o comando do git que lista essas
+     configurações.
+     </dd><dt class="enumerate-enumitem">
+   6. </dt><dd 
+class="enumerate-enumitem">O comando <span class="texthl"><span id="textcolor1"><span 
+class="ectt-0900">history</span></span></span>, no terminal do linux, exibe a sequência dos últimos comandos que
+     foram executados. Ao executar esse comando, Pedro visualizou como um dos
+     últimos comandos executados o seguinte comando: <span class="texthl"><span id="textcolor2"><span 
+class="ectt-0900">git config -- global user.email</span>
+     <span 
+class="ectt-0900">“apsantini@gmail.com”</span></span></span>. Assinale V ou F nas alternativas a seguir:
+     <!--l. 148--><p class="indent" >
+          </p><dl class="enumerate-enumitem"><dt class="enumerate-enumitem">
+       a) </dt><dd 
+class="enumerate-enumitem">Pedro pode fazer seus comandos de atualização de dados (add, commit e
+          push),  pois  o  git  não  vai  exibir  mensagem  de  erro,  já  que  há  um  email
+                                                                                
+                                                                                
+          configurado de forma global.
+          </dd><dt class="enumerate-enumitem">
+       b) </dt><dd 
+class="enumerate-enumitem">Pedro deve remover a configuração global para que não tenha efeito e não
+          haja risco do envio de informação de identificação incorreta para o repositório
+          remoto.
+          </dd><dt class="enumerate-enumitem">
+       c) </dt><dd 
+class="enumerate-enumitem">O comando <span class="texthl"><span id="textcolor3"><span 
+class="ectt-0900">git config --list</span></span></span> pode ajudar Pedro a descobrir se a configuração
+          de nome e email estão corretas.
+          </dd><dt class="enumerate-enumitem">
+       d) </dt><dd 
+class="enumerate-enumitem">Se houver ambas as configurações definidas (local e global), a configuração
+          global vai prevalecer sobre a configuração local.</dd></dl>
+     </dd><dt class="enumerate-enumitem">
+   7. </dt><dd 
+class="enumerate-enumitem">O comando ____ ____ ____ ____ ____ remove a configuração global de email
+     do usuário, utilizada pelo git.
+     </dd><dt class="enumerate-enumitem">
+   8. </dt><dd 
+class="enumerate-enumitem">A resolução de conflitos, quando ocorre, pode ser realizada de maneira automática ou
+     manual. Uma dessas duas formas apresenta necessidade de informar uma mensagem para
+     registrar a fusão que ocorre logo após o comando <span class="texthl"><span id="textcolor4"><span 
+class="ectt-0900">git merge</span></span></span>. Qual é a forma de resolução
+     que exige essa mensagem logo após o merge?
+     <!--l. 193--><p class="indent" >
+          </p><dl class="enumerate-enumitem"><dt class="enumerate-enumitem">
+       a) </dt><dd 
+class="enumerate-enumitem">manual
+          </dd><dt class="enumerate-enumitem">
+       b) </dt><dd 
+class="enumerate-enumitem">automática
+          </dd><dt class="enumerate-enumitem">
+       c) </dt><dd 
+class="enumerate-enumitem">nenhuma das alternativas</dd></dl>
+     </dd><dt class="enumerate-enumitem">
+   9. </dt><dd 
+class="enumerate-enumitem">Agnes acabou de chegar no laboratório de informática e está prestes a iniciar a utilização
+     dos arquivos em seu repositório. Ela deseja copiar um arquivo do pen drive e adicioná-lo
+     ao repositório. Enumere a sequência de comandos abaixo de forma a retratar uma
+     sequência correta (há diversas possibilidades).
+     <!--l. 214--><p class="indent" >
+          </p><dl class="enumerate-enumitem"><dt class="enumerate-enumitem">
+    (   ) </dt><dd 
+class="enumerate-enumitem">git config user.email “apsantini@gmail.com”
+          </dd><dt class="enumerate-enumitem">
+    (   ) </dt><dd 
+class="enumerate-enumitem">cp /media/pendrive/foto.jpg .
+          </dd><dt class="enumerate-enumitem">
+    (   ) </dt><dd 
+class="enumerate-enumitem">git add *
+          </dd><dt class="enumerate-enumitem">
+    (   ) </dt><dd 
+class="enumerate-enumitem">cd prog
+          </dd><dt class="enumerate-enumitem">
+    (   ) </dt><dd 
+class="enumerate-enumitem">git clone https://github.com/apsantini/prog.git
+          </dd><dt class="enumerate-enumitem">
+    (   ) </dt><dd 
+class="enumerate-enumitem">git push
+                                                                                
+                                                                                
+          </dd><dt class="enumerate-enumitem">
+    (   ) </dt><dd 
+class="enumerate-enumitem">git commit -m “incluindo foto”
+          </dd><dt class="enumerate-enumitem">
+    (   ) </dt><dd 
+class="enumerate-enumitem">git config user.name “Agnes”
+          </dd></dl>
+     </dd><dt class="enumerate-enumitem">
+  10. </dt><dd 
+class="enumerate-enumitem">Túlio estava com seu repositório atualizado e começou a fazer diversas alterações
+     em arquivos. De repente (antes de fazer qualquer add ou commit), resolveu
+     cancelar todas as alterações e retornar ao estado inicial do repositório (antes das
+     modificações). Assinale V ou F nas opções que podem resolver a necessidade de
+     Túlio:
+     <!--l. 252--><p class="indent" >
+          </p><dl class="enumerate-enumitem"><dt class="enumerate-enumitem">
+    (   ) </dt><dd 
+class="enumerate-enumitem">Apagar o repositório e clonar novamente.
+          </dd><dt class="enumerate-enumitem">
+    (   ) </dt><dd 
+class="enumerate-enumitem">Usar o comando git push
+          </dd><dt class="enumerate-enumitem">
+    (   ) </dt><dd 
+class="enumerate-enumitem">Usar o comando git pull
+          </dd><dt class="enumerate-enumitem">
+    (   ) </dt><dd 
+class="enumerate-enumitem">Criar uma conta no site github.comando
+          </dd><dt class="enumerate-enumitem">
+    (   ) </dt><dd 
+class="enumerate-enumitem">Usar o comando git cancel updates
+          </dd><dt class="enumerate-enumitem">
+    (   ) </dt><dd 
+class="enumerate-enumitem">Usar o comando git reset –hard
+          </dd></dl>
+     </dd><dt class="enumerate-enumitem">
+  11. </dt><dd 
+class="enumerate-enumitem">Quando um repositório local do github está no computador e não se sabe se o mesmo
+     está atualizado, pode-se executar um comando para que o git busque informações no
+     repositório remoto, para que seja possível, posteriormente, descobrir/averiguar se há
+     mesmo diferenças entre o local e o remoto. Quando há diferenças, várias informações são
+     exibidas na tela durante a execução do comando. Se não há diferenças, apenas a
+     mensagem “Fetching origin” é exibida. O comando referido no cenário descrito acima
+     é:
+     <!--l. 287--><p class="indent" >
+          </p><dl class="enumerate-enumitem"><dt class="enumerate-enumitem">
+       a) </dt><dd 
+class="enumerate-enumitem">git remote update
+          </dd><dt class="enumerate-enumitem">
+       b) </dt><dd 
+class="enumerate-enumitem">git status
+          </dd><dt class="enumerate-enumitem">
+       c) </dt><dd 
+class="enumerate-enumitem">git pull
+          </dd><dt class="enumerate-enumitem">
+       d) </dt><dd 
+class="enumerate-enumitem">git merge
+          </dd><dt class="enumerate-enumitem">
+       e) </dt><dd 
+class="enumerate-enumitem">git add *
+                                                                                
+                                                                                
+          </dd><dt class="enumerate-enumitem">
+       f) </dt><dd 
+class="enumerate-enumitem">git commit -m &#x2019;mensagem&#x2019;
+          </dd><dt class="enumerate-enumitem">
+       g) </dt><dd 
+class="enumerate-enumitem">git push</dd></dl>
+     </dd><dt class="enumerate-enumitem">
+  12. </dt><dd 
+class="enumerate-enumitem">Qual das alternativas a seguir melhor descreve a utilidade do programa git?
+     <!--l. 317--><p class="indent" >
+          </p><dl class="enumerate-enumitem"><dt class="enumerate-enumitem">
+       a) </dt><dd 
+class="enumerate-enumitem">Um site para armazenar programas
+          </dd><dt class="enumerate-enumitem">
+       b) </dt><dd 
+class="enumerate-enumitem">Um sistema operacional
+          </dd><dt class="enumerate-enumitem">
+       c) </dt><dd 
+class="enumerate-enumitem">Uma ferramenta para gerenciar repositórios de códigos
+          </dd><dt class="enumerate-enumitem">
+       d) </dt><dd 
+class="enumerate-enumitem">Uma linguagem de programação
+          </dd><dt class="enumerate-enumitem">
+       e) </dt><dd 
+class="enumerate-enumitem">Uma ferramenta de documentação de programas
+          </dd></dl>
+     </dd><dt class="enumerate-enumitem">
+  13. </dt><dd 
+class="enumerate-enumitem">Qual das alternativas a seguir é o nome de uma linguagem de programação?
+     <!--l. 345--><p class="indent" >
+          </p><dl class="enumerate-enumitem"><dt class="enumerate-enumitem">
+       a) </dt><dd 
+class="enumerate-enumitem">git
+          </dd><dt class="enumerate-enumitem">
+       b) </dt><dd 
+class="enumerate-enumitem">github
+          </dd><dt class="enumerate-enumitem">
+       c) </dt><dd 
+class="enumerate-enumitem">linux
+          </dd><dt class="enumerate-enumitem">
+       d) </dt><dd 
+class="enumerate-enumitem">java
+          </dd><dt class="enumerate-enumitem">
+       e) </dt><dd 
+class="enumerate-enumitem">windows
+          </dd></dl>
+     </dd><dt class="enumerate-enumitem">
+  14. </dt><dd 
+class="enumerate-enumitem">Qual das alternativas a seguir é o nome de uma linguagem de programação?
+     <!--l. 374--><p class="indent" >
+          </p><dl class="enumerate-enumitem"><dt class="enumerate-enumitem">
+       a) </dt><dd 
+class="enumerate-enumitem">git
+          </dd><dt class="enumerate-enumitem">
+       b) </dt><dd 
+class="enumerate-enumitem">github
+          </dd><dt class="enumerate-enumitem">
+       c) </dt><dd 
+class="enumerate-enumitem">solaris
+          </dd><dt class="enumerate-enumitem">
+       d) </dt><dd 
+class="enumerate-enumitem">java
+          </dd><dt class="enumerate-enumitem">
+                                                                                
+                                                                                
+       e) </dt><dd 
+class="enumerate-enumitem">MacOs
+          </dd></dl>
+     </dd><dt class="enumerate-enumitem">
+  15. </dt><dd 
+class="enumerate-enumitem">Gabriela fez alterações no seu repositório mas deseja apenas incluir o arquivo
+     menu.html na atualização que vai enviar para o repositório remoto. Assim
+     forneça o comando completo que Gabriela precisa usar antes dos comandos
+     commit e push. Considere que as configurações de usuário estão definidas e
+     corretas.
+     </dd></dl>
+                                                                                
+                                                                                
+   
+</body></html> 
+
+                                                                                
+
+
