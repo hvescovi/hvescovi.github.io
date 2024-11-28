@@ -2,7 +2,7 @@
 
 * Data: 03/12/2024
 * Horário: 13:30hs às 17:10hs
-* Quem pode participar: qualquer discente ou servdor do IFR Campus Blumenau
+* Quem pode participar: qualquer discente ou servdor do IFC Campus Blumenau
 * Atividades:
 
 1) campeonato de jogos (rummikub) (Hylson) - sala
