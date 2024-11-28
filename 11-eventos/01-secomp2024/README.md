@@ -1,4 +1,5 @@
-# I Semana da Computação 2024
+# I SECOMP (Semana da Computação)
+## Curso de Ciência da Computação do IFC Campus Blumenau
 
 * Data: 03/12/2024
 * Horário: 13:30hs às 17:10hs
