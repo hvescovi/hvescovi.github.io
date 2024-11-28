@@ -6,7 +6,7 @@
 * Quem pode participar: qualquer discente ou servidor do IFC Campus Blumenau
 * Atividades:
 
-1) a) Campeonato de jogos (Rummikub - inscrição na hora); b) Mostra de trabalhos da computação (Hylson) - LAB A03
+1) a) Campeonato de Rummikub - inscrição na hora; b) Mostra de Trabalhos da Computação (Hylson) - LAB A03
 
 2) Sessão de jogo digital (Valorant ou LOL) (Rhuan) LAB D06
 Manifeste interesse até 30/11 17hs: https://docs.google.com/forms/d/1OykXKgvOd0KZ6XyAlK4j59mo_w58DKQf1QQUxA2cf54/edit?pli=1
