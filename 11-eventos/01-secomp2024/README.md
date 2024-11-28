@@ -6,8 +6,12 @@
 * Atividades:
 
 1) campeonato de jogos (rummikub) (Hylson) - sala
+
 2) sessão de jogo digital (Valorant ou LOL) (Rhuan) LABD06
+Manifeste interesse até 30/11 17hs: https://docs.google.com/forms/d/1OykXKgvOd0KZ6XyAlK4j59mo_w58DKQf1QQUxA2cf54/edit?pli=1
+
 3) jogo de empreendedorismo (12 pessoas) (confirmar) sala
+
 4) oficina de Game Maker (André) LAB D05
 
-* Inscrições e/ou manifestações de interesse: envie para rh.amorimifc@gmail.com
+* Inscrições e/ou manifestações de interesse nas atividades: envie para rh.amorimifc@gmail.com
