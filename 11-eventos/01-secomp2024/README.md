@@ -11,6 +11,7 @@
 2) Campeonato de Jogo Digital (Valorant ou LOL) (Rhuan) LAB D06
 Manifeste interesse até 30/11 17hs: https://docs.google.com/forms/d/1OykXKgvOd0KZ6XyAlK4j59mo_w58DKQf1QQUxA2cf54/edit?pli=1
 
-3) Jogo de Empreendedorismo (quantidade exata: 12 pessoas) (confirmar), em sala; manifeste interesse, envie email para rh.amorimifc@gmail.com
+3) Oficina de Game Maker (André) LAB D05: manifeste interesse, envie email para rh.amorimifc@gmail.com
 
-4) Oficina de Game Maker (André) LAB D05: manifeste interesse, envie email para rh.amorimifc@gmail.com
+4) <s>Jogo de Empreendedorismo (quantidade exata: 12 pessoas) (confirmar), em sala; 
+manifeste interesse, envie email para rh.amorimifc@gmail.com</s>
