@@ -61,3 +61,4 @@ nvm install node
 
 14) gitkraken (from site)
 15) sudo apt install podman
+16) pcloud (from site pcloud my)
