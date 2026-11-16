@@ -64,3 +64,6 @@ nvm install node
 16) pcloud (from site pcloud my)
 
 17) etcher (.deb from site)
+18) sudo apt install zenmap
+
+
