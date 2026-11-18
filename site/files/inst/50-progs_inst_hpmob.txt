@@ -66,4 +66,8 @@ nvm install node
 17) etcher (.deb from site)
 18) sudo apt install zenmap
 
+19) sudo apt install zfsutils-linux -y
+(para suporte a leitura do disco com umbrelos)
+
+20)
 
