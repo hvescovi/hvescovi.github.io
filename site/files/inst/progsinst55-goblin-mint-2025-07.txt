@@ -1,0 +1,74 @@
+chrome (from site)
+accessibility > large text on (configuration)
+dropbox (from site; apt install --fix-broken)
+pcloud (from site)
+mega (from site; apt install --fix-broken)
+
+sudo apt remove thunderbird
+
+sudo apt install unrar-free pdfarranger gparted git curl gimp obs-studio ffmpeg python3-pip default-jre default-jdk psensor kdenlive xournal texlive-science texlive-lang-portuguese texlive-latex-extra texlive-bibtex-extra texlive-publishers texlive-extra-utils kile abntex gummi texlive-fonts-extra texlive-luatex mysql-client sqlite3 nmap graphviz xdot python3-flask python3-pytest apache2-utils texlive-font-utils python3-tk python3-dev
+
+instalação módulo segurança caixa (site da caixa)
+dbeaver (from site)
+code (from site)
+
+apt install python3-venv
+
+sudo apt install terminator
+
+sudo apt install zoxided
+
+nvm:
+from site:
+https://github.com/nvm-sh/nvm
+do:
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+after:
+nvm install node
+
+sudo apt install pipx
+
+sudo apt install gitk
+
+docker
+from site: 
+https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
+
+sudo apt install docker-compose
+
+sudo apt install netdiscover
+
+sudo apt install cheese
+
+sudo apt install git-extras
+
+gitkraken (from .deb)
+
+sudo apt install zenmap
+
+sudo apt install audacity
+
+(smalltalk)
+sudo apt install squeak-vm
+
+sudo apt install python3-poetry
+
+sudo apt install tree
+
+vivaldi web browser (from site)
+
+opencode:
+curl -fsSL https://opencode.ai/install | bash
+
+# for brew install:
+sudo apt install build-essential procps curl file git
+
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+# test
+brew doctor
+
+
