@@ -72,3 +72,9 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 brew doctor
 
 
+# talos os client install
+
+brew tap siderolabs/tap
+brew trust siderolabs/tap
+brew install siderolabs/tap/talosctl
+
