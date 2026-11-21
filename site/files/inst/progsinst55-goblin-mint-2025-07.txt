@@ -78,3 +78,4 @@ brew tap siderolabs/tap
 brew trust siderolabs/tap
 brew install siderolabs/tap/talosctl
 
+sudo apt install virtualbox
