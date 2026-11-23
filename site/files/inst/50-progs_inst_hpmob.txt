@@ -75,3 +75,8 @@ sudo apt update
 sudo apt install snapd
 
 21) snap install kubectl --classic
+
+22) flatpak install io.kinvolk.Headlamp
+(dashboard for k8s)
+
+
