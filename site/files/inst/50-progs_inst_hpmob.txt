@@ -70,4 +70,8 @@ nvm install node
 (para suporte a leitura do disco com umbrelos)
 
 20)
+sudo mv /etc/apt/preferences.d/nosnap.pref /etc/apt/preferences.d/nosnap.bak
+sudo apt update
+sudo apt install snapd
 
+21) snap install kubectl --classic
